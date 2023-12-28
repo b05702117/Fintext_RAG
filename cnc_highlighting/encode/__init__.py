@@ -1,0 +1,1 @@
+from ._bert_highlighter import BertForHighlightPrediction
