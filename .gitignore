@@ -1,0 +1,6 @@
+__pycache__/*
+
+collections/*.
+Jsonl_Data/*.jsonl
+
+cnc_highlighting/*
