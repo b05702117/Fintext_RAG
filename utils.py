@@ -161,3 +161,31 @@ def retrieve_paragraph_from_docid(docid):
                 return data["contents"]
     print("Paragraph not found.")
     return None
+
+def convert_docid_to_title(docid):
+    ''' TODO: wait for the mapping of part_key and item_key from YT'''
+    
+    with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
+        cik_to_company = json.load(f)
+
+    # 20220125_10-Q_789019_part1_item2_para475
+    components = docid.split('_')
+    if len(components) != 6:
+        print("Invalid docid")
+        return None
+    
+    # Extract relevant parts
+    date_str, form, cik = components[0], components[1], components[2]
+
+    # Convert date to year and quarter (assuming the date format is yyyymmdd)
+    year = date_str[:4]
+    month = int(date_str[4:6])
+    quarter = (month - 1) // 3 + 1
+
+    # Get the company name from CIK
+    company_name = cik_to_company.get(cik, "Unknown Company")
+
+    # Formant the new title
+    new_title = f"{company_name} {year} Q{quarter} {form}"
+
+    return new_title
