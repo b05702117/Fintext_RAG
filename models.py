@@ -20,6 +20,7 @@ class QAPipeline:
         titles, texts = self.retriever.retrieve_and_process_documents(query)
         return self.reader.find_answer(query, titles, texts)
     
+
 class HighlightPipeline:
     ''' TODO '''
     def __init__(self, retriever, highlighter):
@@ -120,30 +121,71 @@ class DprHighlighter:
     def find_max_idx(logits, dim=-1):
         probs = torch.softmax(logits, dim=dim)
         return torch.argmax(probs)
-
-    @staticmethod
-    def extract_answer_span(tokenizer, token_ids, start_position, end_position):
-        answer_tokens = token_ids[start_position : end_position + 1]
-        answer = tokenizer.decode(answer_tokens, skip_special_tokens=True)
-        return answer
     
-    def highlighting_outputs(self, target, ref_titles, references):
+    @staticmethod
+    def mask_prior_logits(logits, mask_idx):
+        '''
+        Masks the logits by setting the value before the mask_idx to -inf
+            logits: tensor of shape (batch_size, sequence_length)
+            mask_idx: tensor of shape (batch_size, )
+        '''
+        # Clone the logits to avoid modifying the original tensor
+        masked_logits = logits.clone()
+
+        sequence_range = torch.arange(masked_logits.shape[1])
+        mask = sequence_range[None, :] < mask_idx[:, None]
+        masked_logits[mask] = -float("inf")
+
+        return masked_logits
+
+    def extract_answer_span(self, token_ids, start_position, end_position):
+        answer_tokens = token_ids[start_position : end_position + 1]
+        answer = self.tokenizer.decode(answer_tokens, skip_special_tokens=True)
+        return answer
+
+    def find_target_start_position(self, input_ids):
+        ''' 
+            encoded_inputs: [CLS] <reference> [SEP] <title> [SEP] <target_paragraph> [SEP]
+            input_ids: tensor of shape (batch_size, sequence_length)
+        '''
+        sep_token_id = self.tokenizer.sep_token_id
+        # Create a boolean mask where positions of SEP tokens are True
+        sep_mask = input_ids == sep_token_id
+        # Find the indices of all SEP tokens using the mask
+        sep_positions = torch.nonzero(sep_mask, as_tuple=False) 
+
+        # Initialize a tensor to hold the second SEP token index for each sequence
+        batch_size = input_ids.shape[0]
+        second_sep_positions = torch.zeros(batch_size, dtype=torch.int64)
+
+        # Loop through the sequences in the batch
+        for i in range(batch_size):
+            # Find SEP positions for the current sequence
+            sep_indices = sep_positions[sep_positions[:, 0] == i, 1]
+            # Store the second SEP position for the current sequence
+            second_sep_positions[i] = sep_indices[1]
+        
+        return second_sep_positions + 1
+
+
+    def highlighting_outputs(self, target, target_title, references):
         ''' 
         target: the target paragraph that should be highlighted
-        ref_titles: the IDs of the reference paragraphs
+        targe_title: the title of the target paragraph
         references: the retrieved paragrpah, which are the reference for our highlighting work
+        DPRReaderTokenizer output: [CLS] <questions> [SEP] <titles> [SEP] <texts>
         BERT input: [CLS] <texts> [SEP] <questions> 
         TODO: 
             - 限制start_logits & end_logits在最後面? (作為好多個reference的最終highlight)
-            - titles should be concatenated with texts
             - handle paragraph that is too long
         '''
         
-        targets = [target] * len(ref_titles) # our target paragraph that should be highlighted
-        
+        targets = [target] * len(references)        # our target paragraph that should be highlighted
+        titles = [target_title] * len(references)   # the title of the target paragraph
+
         encoded_inputs = self.tokenizer(
             questions=references,       # retrieved documents are the reference for our highlighting work
-            # titles=ref_titles,        # TODO: titles should be concatenated with texts
+            titles=titles,              
             texts=targets,
             padding=True if len(targets) > 1 else False,
             return_tensors="pt", 
@@ -155,7 +197,7 @@ class DprHighlighter:
         return encoded_inputs, outputs
     
 
-    def visualize_highlight_span(self, encoded_inputs, ref_titles, relevance_logits, start_logits, end_logits):
+    def visualize_highlight_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits):
         num_ref = start_logits.shape[0]
 
         # Sort the relevance logits in descending order
@@ -164,16 +206,15 @@ class DprHighlighter:
 
         for i in sorted_indices:
 
-            start_idx = DprHighlighter.find_max_idx(start_logits[i])
-            end_idx = DprHighlighter.find_max_idx(end_logits[i])
-            highlighted_span = DprHighlighter.extract_answer_span(
-                self.tokenizer,
+            start_idx = self.find_max_idx(start_logits[i])
+            end_idx = self.find_max_idx(end_logits[i])
+            highlighted_span = self.extract_answer_span( 
                 encoded_inputs['input_ids'][i],
                 start_idx,
                 end_idx
             )
             
-            print(f"{relevance_probs[i]:.4f} reference {ref_titles[i]}:")
+            print(f"{relevance_probs[i]:.4f} reference {ref_ids[i]}:")
             print(f"start_idx: {start_idx}, end_idx: {end_idx}, span: {highlighted_span}")
 
 
@@ -256,7 +297,7 @@ class DprReader:
         for i in sorted_indices:        
             start_idx = DprReader.find_max_idx(start_logits[i])
             end_idx = DprReader.find_max_idx(end_logits[i])
-            highlighted_span = DprReader.extract_answer_span(
+            highlighted_span = DprReader.extract_answer_span( # TODO: 確認為什麼這邊寫self.不行
                 self.tokenizer,
                 encoded_inputs['input_ids'][i],
                 start_idx,
