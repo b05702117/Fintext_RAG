@@ -4,3 +4,5 @@ collections/*.
 Jsonl_Data/*.jsonl
 
 cnc_highlighting/*
+
+retriever_reader_testing.ipynb
