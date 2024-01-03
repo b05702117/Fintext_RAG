@@ -60,9 +60,9 @@ class DenseDocumentRetriever:
 
     def extract_titles_and_texts(self, hits):
         ''' Extract and return titles and texts from the top k hits '''
-        titles = [hits[i].docid for i in range(len(hits))]
+        ids = [hits[i].docid for i in range(len(hits))]
         texts = [self.get_document_content(hits[i].docid) for i in range(len(hits))]
-        return titles, texts
+        return ids, texts
     
     def retrieve_and_process_documents(self, query):
         ''' Retrieve the top k documents and prepare their data reader processing '''
@@ -89,15 +89,15 @@ class SparseDocumentRetriever:
 
     def extract_titles_and_texts(self, hits):
         ''' Extract and return titles and texts from the top k hits '''
-        titles, texts = [], []
+        ids, texts = [], []
         for i in range(len(hits)):
             parsed_json = json.loads(hits[i].raw)
             id = parsed_json['id']
             content = parsed_json['contents']
-            titles.append(id)
+            ids.append(id)
             texts.append(content)
 
-        return titles, texts
+        return ids, texts
 
     def retrieve_and_process_documents(self, query):
         ''' Retrieve the top k documents and prepare their data for reader processing '''
@@ -287,8 +287,8 @@ class DprReader:
 
         return encoded_inputs, outputs
     
-    def visualize_answer_span(self, encoded_inputs, titles, relevance_logits, start_logits, end_logits):
-        num_ref = len(titles)
+    def visualize_answer_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits):
+        num_ref = len(ref_ids)
 
         # Sort the relevance logits in descending order
         relevance_probs = torch.softmax(relevance_logits, dim=-1)
@@ -304,7 +304,7 @@ class DprReader:
                 end_idx
             )
             
-            print(f"{relevance_probs[i]:.4f} reference {titles[i]}:")
+            print(f"{relevance_probs[i]:.4f} reference {ref_ids[i]}:")
             print(f"start_idx: {start_idx}, end_idx: {end_idx}, span: {highlighted_span}")
 
 
