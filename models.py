@@ -196,8 +196,12 @@ class DprHighlighter:
 
         return encoded_inputs, outputs
     
+    def output_highlighting_results(self, output_file, results):
+        with open(os.path.join(ROOT, 'highlighting_results', output_file), 'w') as f:
+            json.dump(results, f)
 
-    def visualize_highlight_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits):
+    def visualize_highlight_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits, output_file=None):
+        results = []
         num_ref = start_logits.shape[0]
 
         # Sort the relevance logits in descending order
@@ -214,9 +218,22 @@ class DprHighlighter:
                 end_idx
             )
             
+            result = {
+                "relevance_prob": f"{relevance_probs[i]:.4f}",
+                "highlighted_span": highlighted_span, 
+                "reference_id": ref_ids[i],
+                "reference_paragraph": utils.retrieve_paragraph_from_docid(ref_ids[i])
+            }
+            results.append(result)
+
             print(f"{relevance_probs[i]:.4f} reference {ref_ids[i]}:")
             print(f"start_idx: {start_idx}, end_idx: {end_idx}, span: {highlighted_span}")
 
+        if output_file:
+            with open(os.path.join(ROOT, 'highlighting_results', output_file), 'w') as f:
+                for result in results:
+                    json.dump(result, f)
+                    f.write('\n')
 
 class CncBertHighlighter:
     def __init__(self, model_name: str = 'DylanJHJ/bert-base-final-v0-ep2', device: str = 'cpu'):
