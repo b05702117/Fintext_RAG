@@ -1,12 +1,30 @@
 import json
 import os
 import argparse
+import glob
 from pathlib import Path
 from transformers import BertTokenizer
 
 ROOT = "/home/ybtu/FinNLP"
-SOURCE_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
-DEST_DIR = "/home/ybtu/FinNLP/collections"
+# SOURCE_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
+SOURCE_DIR = "/home/ythsiao/output"
+# DEST_DIR = "/home/ybtu/FinNLP/collections"
+DEST_DIR = "/tmp2/ybtu/FinNLP/collections"
+
+def visit_jsonl_files_under_dir(root_dir):
+    ''' Visit all .jsonl files under the root directory and return a list of their paths '''
+    # Pattern to match all .jsonl files under the root directory
+    pattern = os.path.join(root_dir, '**', '*.jsonl')
+    
+    # List to store the paths of the files
+    jsonl_files = []
+
+    # Walk through the directory and find all .jsonl files
+    for filename in glob.glob(pattern, recursive=True):
+        jsonl_files.append(filename)
+        # Here you can add code to "visit" each file, e.g., read them, print their names, etc.
+
+    return jsonl_files
 
 def read_jsonl_file(file_path):
     with open(file_path, "r") as file:
@@ -85,8 +103,10 @@ def main(format_type):
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
-    for file_name in os.listdir(SOURCE_DIR):
-        converted_data = convert_jsonl_format(os.path.join(SOURCE_DIR, file_name), format_type)
+    file_paths = visit_jsonl_files_under_dir(SOURCE_DIR)
+    for file_path in file_paths:
+        converted_data = convert_jsonl_format(file_path, format_type)
+        file_name = Path(file_path).name
         save_data_to_jsonl(converted_data, os.path.join(dest_dir, file_name))
 
 if __name__ == "__main__":
