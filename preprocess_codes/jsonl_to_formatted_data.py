@@ -3,13 +3,14 @@ import os
 import argparse
 import glob
 from pathlib import Path
+import re
 from transformers import BertTokenizer
 
 ROOT = "/home/ybtu/FinNLP"
 # SOURCE_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
 SOURCE_DIR = "/home/ythsiao/output"
-# DEST_DIR = "/home/ybtu/FinNLP/collections"
-DEST_DIR = "/tmp2/ybtu/FinNLP/collections"
+DEST_DIR = "/home/ybtu/FinNLP/collections"
+# DEST_DIR = "/tmp2/ybtu/FinNLP/collections"
 
 def visit_jsonl_files_under_dir(root_dir):
     ''' Visit all .jsonl files under the root directory and return a list of their paths '''
@@ -43,6 +44,11 @@ def filter_paragraphs(paragraphs):
     return filtered_paragraphs
 
 def convert_data(first_line, data, format_type):
+    # Regular expression pattern to match ids ending with "_fin_stats_para" followed by numbers
+    pattern = r'_fin_stats_para\d+$'
+    if re.search(pattern, data["id"]):
+        return None
+
     if data["id"].endswith("statements") or data["id"].endswith("sheets"):
         return None
 
@@ -61,7 +67,7 @@ def convert_data(first_line, data, format_type):
     if format_type == "multi_fields":
         base_data.update({
             "cik": first_line["cik"],
-            "name": first_line["name"],
+            "company_name": first_line["company_name"],
             "filing_year": first_line["filing_date"][:4],
             "filing_month": first_line["filing_date"][4:6],
             "filing_day": first_line["filing_date"][6:],

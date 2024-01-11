@@ -72,7 +72,7 @@ class DenseDocumentRetriever:
 
 
 class SparseDocumentRetriever:
-    def __init__(self, searcher, fields: dict() = {'filing_year': 0.2, 'name': 0.4, 'contents': 0.4}, docs_dir=FORMMATED_DIR, k=K):
+    def __init__(self, searcher, fields: dict() = {'filing_year': 0.2, 'company_name': 0.4, 'contents': 0.4}, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
         self.fields = fields # the weight of each field
         self.docs_dir = docs_dir
