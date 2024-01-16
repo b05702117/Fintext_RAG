@@ -1,0 +1,22 @@
+{
+    "Total number of documents": 30,
+    "Total number of paragraphs": 22129,
+    "Average number of tokens per paragraph": 31.780197930317684,
+    "Paragraph ID with max tokens": "20180502_10-Q_320193_part1_item1_para35",
+    "Max number of tokens": 1042,
+    "Paragraph ID with min tokens": "20200501_10-Q_320193_part1_item1_para12",
+    "Min number of tokens": 1,
+    "Length groups": {
+        "100": 19658,
+        "200": 1795,
+        "300": 526,
+        "400": 104,
+        "500": 27,
+        "600": 11,
+        "700": 4,
+        "800": 2,
+        "900": 0,
+        "1000": 1,
+        "1042": 1
+    }
+}
