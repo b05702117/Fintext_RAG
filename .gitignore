@@ -1,8 +1,10 @@
 __pycache__/*
 
-collections/*.
+collections/*
 Jsonl_Data/*.jsonl
+indexes/*
 
 cnc_highlighting/*
+DPR/*
 
 retriever_reader_testing.ipynb
