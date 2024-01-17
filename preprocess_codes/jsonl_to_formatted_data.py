@@ -9,7 +9,7 @@ from transformers import BertTokenizer
 ROOT = "/home/ybtu/FinNLP"
 # SOURCE_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
 SOURCE_DIR = "/home/ythsiao/output"
-DEST_DIR = "/home/ybtu/FinNLP/collections"
+DEST_DIR = "/home/ybtu/FinNLP/collections/10K"
 # DEST_DIR = "/tmp2/ybtu/FinNLP/collections"
 
 def visit_jsonl_files_under_dir(root_dir):
@@ -43,6 +43,46 @@ def filter_paragraphs(paragraphs):
             filtered_paragraphs.append(paragraph)
     return filtered_paragraphs
 
+def convert_docid_to_title(docid):
+    ''' TODO: wait for the mapping of part_key and item_key from YT'''
+
+    with open('cik_to_company.json', 'r') as f:
+        cik_to_company = json.load(f)
+
+    with open('item_mapping.json', 'r') as f:
+        item_mapping = json.load(f)
+
+    # 20220125_10-Q_789019_part1_item2_para475
+    components = docid.split('_')
+    
+    # Extract relevant parts
+    date_str, form, cik = components[0], components[1], components[2]
+    part, item = None, None
+    if len(components) == 6:
+        part, item = components[3], components[4]
+    elif len(components) == 5:
+        # 20211216_10-K_315189_mda_para398
+        item = components[3]
+    else:
+        print("Invalid docid:", docid)
+        return None
+
+    # Convert date to year and quarter (assuming the date format is yyyymmdd)
+    year = date_str[:4]
+    month = int(date_str[4:6])
+    quarter = (month - 1) // 3 + 1
+
+    # Get the company name from CIK
+    company_name = cik_to_company.get(cik, "Unknown Company")
+
+    # Get the item name from item number
+    item_name = item_mapping.get(item, "Unknown Item")
+
+    # Formant the new title
+    new_title = f"{company_name} {year} Q{quarter} {form} {item_name}"
+
+    return new_title
+
 def convert_data(first_line, data, format_type):
     # Regular expression pattern to match ids ending with "_fin_stats_para" followed by numbers
     pattern = r'_fin_stats_para\d+$'
@@ -75,18 +115,17 @@ def convert_data(first_line, data, format_type):
             "order": data["order"]
         })
 
-    # elif format_type == "meta_data":
-    #     base_data["metadata"] = {
-    #         "cik": first_line["cik"],
-    #         "name": first_line["name"],
-    #         "filing_date": first_line["filing_date"],
-    #         "form": first_line["form"],
-    #         "order": data["order"]
-    #     }
-
     elif format_type == "meta_data":
-        meta_data = f"cik: {first_line['cik']}, name: {first_line['name']}, filing_date: {first_line['filing_date']}, form: {first_line['form']}"
+        meta_data = f"cik: {first_line['cik']}, company_name: {first_line['company_name']}, filing_date: {first_line['filing_date']}, form: {first_line['form']}"
         base_data["contents"] = meta_data + "; " + base_data["contents"]
+
+    elif format_type == "title":
+        title = convert_docid_to_title(data["id"])
+        if title:
+            base_data["contents"] = title + "; " + base_data["contents"]
+        else:
+            meta_data = f"cik: {first_line['cik']}, company_name: {first_line['company_name']}, filing_date: {first_line['filing_date']}, form: {first_line['form']}"
+            base_data["contents"] = meta_data + "; " + base_data["contents"]
 
     return base_data
 
@@ -117,7 +156,7 @@ def main(format_type):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert JSONL data to desired format")
-    parser.add_argument("format_type", choices=["basic", "multi_fields", "meta_data"], help="Choose the format type to convert the JSONL data")
+    parser.add_argument("format_type", choices=["basic", "multi_fields", "meta_data", "title"], help="Choose the format type to convert the JSONL data")
     args = parser.parse_args()
 
     main(args.format_type)

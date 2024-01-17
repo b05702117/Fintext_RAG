@@ -8,7 +8,7 @@ from transformers import DPRReader, DPRReaderTokenizer
 from pyserini.search.lucene import LuceneSearcher
 from cnc_highlighting.encode import BertForHighlightPrediction
 
-K = 10 # top k documents to retrieve
+K = 100 # top k documents to retrieve
 
 class QAPipeline:
     ''' TODO '''
@@ -72,7 +72,7 @@ class DenseDocumentRetriever:
 
 
 class SparseDocumentRetriever:
-    def __init__(self, searcher, fields: dict() = {'filing_year': 0.2, 'company_name': 0.4, 'contents': 0.4}, docs_dir=FORMMATED_DIR, k=K):
+    def __init__(self, searcher, fields: dict() = {'company_name': 0.6, 'contents': 0.4}, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
         self.fields = fields # the weight of each field; exchange 'company_name' with 'name' for 10Q
         self.docs_dir = docs_dir
@@ -344,3 +344,14 @@ def print_hits(hits, display_top_n=10):
         print(f'{i+1:2} {hits[i].docid:7} {hits[i].score:.5f}')
         print(utils.retrieve_paragraph_from_docid(hits[i].docid))
     print()
+
+def output_hits(hits, output_file):
+    with open(output_file, 'w') as f:
+        for hit in hits:
+            result = {
+                'id': hit.docid,
+                'score': float(hit.score), # convert float32 to standard float
+                'contents': utils.retrieve_paragraph_from_docid(hit.docid)
+            }
+            json.dump(result, f)
+            f.write('\n')

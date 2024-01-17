@@ -153,7 +153,10 @@ def retrieve_paragraph_from_fromatted_jsonl(file_name, part_key, item_key, parag
     return None
 
 def retrieve_paragraph_from_docid(docid):
-    file_name = docid.split('_')[0] + '_' + docid.split('_')[1] + '_' + docid.split('_')[2] + '.jsonl'
+    components = docid.split('_')
+    file_name = components[0] + '_' + components[1] + '_' + components[2] + '.jsonl'
+    # print('retrieve from:', file_name)
+    # file_name = docid.split('_')[0] + '_' + docid.split('_')[1] + '_' + docid.split('_')[2] + '.jsonl'
     with open(os.path.join(FORMMATED_DIR, file_name), "r") as open_file:
         for line in open_file:
             data = json.loads(line)
@@ -164,18 +167,27 @@ def retrieve_paragraph_from_docid(docid):
 
 def convert_docid_to_title(docid):
     ''' TODO: wait for the mapping of part_key and item_key from YT'''
-    
+
     with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
         cik_to_company = json.load(f)
+    
+    with open(os.path.join(ROOT, 'collections', 'item_mapping.json'), 'r') as f:
+        item_mapping = json.load(f)
 
     # 20220125_10-Q_789019_part1_item2_para475
     components = docid.split('_')
-    if len(components) != 6:
-        print("Invalid docid")
-        return None
     
     # Extract relevant parts
     date_str, form, cik = components[0], components[1], components[2]
+    part, item = None, None
+    if len(components) == 6:
+        part, item = components[3], components[4]
+    elif len(components) == 5:
+        # 20211216_10-K_315189_mda_para398
+        item = components[3]
+    else:
+        print("Invalid docid:", docid)
+        return None
 
     # Convert date to year and quarter (assuming the date format is yyyymmdd)
     year = date_str[:4]
@@ -185,7 +197,10 @@ def convert_docid_to_title(docid):
     # Get the company name from CIK
     company_name = cik_to_company.get(cik, "Unknown Company")
 
+    # Get the item name from item number
+    item_name = item_mapping.get(item, "Unknown Item")
+
     # Formant the new title
-    new_title = f"{company_name} {year} Q{quarter} {form}"
+    new_title = f"{company_name} {year} Q{quarter} {form} {item_name}"
 
     return new_title
