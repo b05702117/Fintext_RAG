@@ -3,6 +3,7 @@ __pycache__/*
 collections/*
 Jsonl_Data/*.jsonl
 indexes/*
+retrieval_results/*
 
 cnc_highlighting/*
 DPR/*
