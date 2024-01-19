@@ -1,9 +1,13 @@
 __pycache__/*
 
-collections/*
+collections/10K/*
+collections/10Q/*
 Jsonl_Data/*.jsonl
 indexes/*
 retrieval_results/*
+Archive/*
+downloads/*
+highlighting_results/*
 
 cnc_highlighting/*
 DPR/*
