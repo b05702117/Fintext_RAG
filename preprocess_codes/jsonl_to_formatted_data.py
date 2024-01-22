@@ -85,7 +85,7 @@ def convert_docid_to_title(docid):
 
 def convert_data(first_line, data, format_type):
     # Regular expression pattern to match ids ending with "_fin_stats_para" followed by numbers
-    pattern = r'_fin_stats_para\d+$'
+    pattern = r'_finstats_para\d+$'
     if re.search(pattern, data["id"]):
         return None
 
