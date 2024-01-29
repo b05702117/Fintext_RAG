@@ -114,8 +114,17 @@ def find_highest_prob_word(data, n):
 
     return top_n_words 
 
+def get_10K_file_name(cik, year):
+    ''' function for 10-K '''
+    search_pattern = f"{year}????_10-K_{cik}.jsonl"
+    for file_name in os.listdir(FORMMATED_DIR):
+        if fnmatch.fnmatch(file_name, search_pattern):
+            return file_name
+    print("File not found.")
+    return None
 
 def get_file_name(cik, form, year, month):
+    ''' function for 10-Q '''
     search_pattern = f"{year}{month:02d}??_{form}_{cik}.jsonl"
     for file_name in os.listdir(FORMMATED_DIR):
         if fnmatch.fnmatch(file_name, search_pattern):
