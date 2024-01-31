@@ -8,6 +8,7 @@ retrieval_results/*
 Archive/*
 downloads/*
 highlighting_results/*
+embeddings/*
 
 cnc_highlighting/*
 DPR/*
