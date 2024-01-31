@@ -4,7 +4,8 @@ import json
 import torch
 from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
 from pyserini.search.faiss import FaissSearcher, DprQueryEncoder
-from transformers import DPRReader, DPRReaderTokenizer
+from transformers import DPRReader, DPRReaderTokenizer, DPRQuestionEncoderTokenizer
+from transformers import AutoTokenizer
 from pyserini.search.lucene import LuceneSearcher
 from cnc_highlighting.encode import BertForHighlightPrediction
 
@@ -37,10 +38,11 @@ class HighlightPipeline:
 
 
 class DenseDocumentRetriever: 
-    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K):
+    def __init__(self, searcher, q_tokenizer, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
         self.docs_dir = docs_dir
         self.k = k
+        self.q_tokenizer = q_tokenizer # q_tokenizer is used to truncate the query to the maximum length
     
     def get_document_content(self, docid):
         ''' return the paragraph content given the docid from raw jsonl files '''
@@ -53,9 +55,16 @@ class DenseDocumentRetriever:
         print("Paragraph not found.")
         return None
 
+    def truncate_query(self, query, max_length=512):
+        ''' truncate the query to the maximum length '''
+        tokens = self.q_tokenizer(query, return_tensors='pt', truncation=True, max_length=max_length)
+        truncated_query = self.q_tokenizer.decode(tokens['input_ids'][0], skip_special_tokens=True)
+        return truncated_query
+
     def search_documents(self, query):
         ''' return the top k documents given the query '''
-        hits = self.searcher.search(query, k=self.k)
+        truncated_query = self.truncate_query(query)
+        hits = self.searcher.search(truncated_query, k=self.k)
         return hits
 
     def extract_titles_and_texts(self, hits):

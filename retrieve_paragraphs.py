@@ -108,7 +108,7 @@ def get_retriever(model_type, index_type, filter_name=None):
     elif model_type == "dense":
         query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
         searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
-        return DenseDocumentRetriever(searcher)
+        return DenseDocumentRetriever(searcher, query_encoder.tokenizer)
 
 def output_hits(hits, output_file):
     # Ensure the directory exists
@@ -156,7 +156,8 @@ def main():
                 target_title = convert_docid_to_title(data["id"])
                 target_paragraph = data["contents"]
                 
-                hits = retriever.search_documents(f"{instruction}; {target_paragraph}")
+                full_query = f"{instruction}; {target_paragraph}"
+                hits = retriever.search_documents(full_query)
 
                 index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
 
