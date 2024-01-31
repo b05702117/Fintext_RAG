@@ -10,12 +10,12 @@ from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--model", type=str, required=True)
-parser.add_argument("--searcher", type=str, required=True)
+parser.add_argument("--model", type=str, required=True, choices=["dense", "sparse"])
+parser.add_argument("--index_type", type=str, required=True)
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
-
+parser.add_argument("--filter_name", type=str, default=None)
 
 args = parser.parse_args()
 
@@ -24,12 +24,12 @@ model_mapping = {
     "sparse": SparseDocumentRetriever
 }
 
-sparse_searcher_mapping = {
+sparse_index_mapping = {
     "multi_fields": "multi_fields",
     "sparse_title": "sparse_title", 
 }
 
-dense_searcher_mapping = {
+dense_index_mapping = {
     "basic": "dpr-ctx_encoder-multiset-base-basic",
     "meta_data": "dpr-ctx_encoder-multiset-base-meta_data",
     "title": "dpr-ctx_encoder-multiset-base-title"
@@ -73,21 +73,41 @@ def convert_docid_to_title(docid):
 
     return new_title
 
-def get_retriever(model_type, searcher_type):
+
+def get_index_name(model_type, index_type, filter_name=None):
     if model_type not in model_mapping:
         raise ValueError(f"Unknown model type: {model_type}")
-
+    
     if model_type == "sparse":
-        if searcher_type not in sparse_searcher_mapping:
-            raise ValueError(f"Invalid searcher type: {searcher_type} for sparse retriever")
-        searcher = LuceneSearcher(f"{INDEX_DIR}/{sparse_searcher_mapping[searcher_type]}")
-        return SparseDocumentRetriever(searcher)
+        if index_type not in sparse_index_mapping:
+            raise ValueError(f"Invalid index: {index_type} for sparse retriever")
+        index_name = sparse_index_mapping[index_type]
     
     elif model_type == "dense":
-        if searcher_type not in dense_searcher_mapping:
-            raise ValueError(f"Invalid searcher type: {searcher_type} for dense retriever")
+        if index_type not in dense_index_mapping:
+            raise ValueError(f"Invalid index: {index_type} for dense retriever")
+        index_name = dense_index_mapping[index_type]
+
+    if filter_name is not None:
+        index_name += f"-{filter_name}"
+
+    return index_name
+    
+
+def get_retriever(model_type, index_type, filter_name=None):
+    if model_type not in model_mapping:
+        raise ValueError(f"Unknown model type: {model_type}")
+    
+    index_name = get_index_name(model_type, index_type, filter_name)
+    print(f"Using index: {index_name}")
+
+    if model_type == "sparse":
+        searcher = LuceneSearcher(f"{INDEX_DIR}/{index_name}")
+        return SparseDocumentRetriever(searcher)
+
+    elif model_type == "dense":
         query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
-        searcher = FaissSearcher(f"{INDEX_DIR}/{dense_searcher_mapping[searcher_type]}", query_encoder)
+        searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
         return DenseDocumentRetriever(searcher)
 
 def output_hits(hits, output_file):
@@ -104,12 +124,14 @@ def output_hits(hits, output_file):
             json.dump(result, f)
             f.write('\n')
 
+
 def main():
     model_type = args.model
-    searcher_type = args.searcher
-    print(model_type, searcher_type)
+    index_type = args.index_type
+    filter_name = args.filter_name
+    print(model_type, index_type, filter_name)
 
-    retriever = get_retriever(model_type, searcher_type)
+    retriever = get_retriever(model_type, index_type, filter_name=filter_name)
 
     cik = args.cik
     target_company = cik_to_company[cik]
@@ -135,7 +157,11 @@ def main():
                 target_paragraph = data["contents"]
                 
                 hits = retriever.search_documents(f"{instruction}; {target_paragraph}")
-                output_hits(hits, os.path.join(ROOT, 'retrieval_results', f"{cik}_{target_year}", searcher_type, data["id"] + '.jsonl'))
+
+                index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
+
+                output_file = os.path.join(ROOT, 'retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
+                output_hits(hits, output_file)
 
 if __name__ == "__main__":
     main()

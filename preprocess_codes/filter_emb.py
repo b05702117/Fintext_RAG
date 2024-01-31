@@ -3,9 +3,9 @@ import json
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--form", type=str, required=True)
-parser.add_argument("--encoder", type=str, required=True) # dpr-ctx_encoder-multiset-base
-parser.add_argument("--format_type", type=str, required=True) # basic, meta_data, title
+parser.add_argument("--form", type=str, required=True, choices=["10K", "10Q"])
+parser.add_argument("--encoder", type=str, required=True, choices=["dpr-ctx_encoder-multiset-base"]) 
+parser.add_argument("--format_type", type=str, required=True, choices=["basic", "meta_data", "title"]) # basic, meta_data, title
 parser.add_argument("--emb_file_name", type=str, default="embeddings")
 parser.add_argument("--cik", type=str)
 parser.add_argument("--start_year", type=int)
@@ -35,16 +35,6 @@ def filter_embeddings(args, source_file, output_file):
             if match_cik and match_year and match_item:
                 outputfile.write(line)
 
-def generate_output_dir(args):
-    output_dir = f"../embeddings/{args.form}/{args.encoder}-{args.format_type}"
-    if args.cik:
-        output_dir += f"-cik{args.cik}"
-    if args.start_year and args.end_year:
-        output_dir += f"-year{args.start_year}_{args.end_year}"
-    if args.item:
-        output_dir += f"-item{args.item}"
-    return output_dir
-
 def generate_output_file(args):
     output_file = f"../embeddings/{args.form}/{args.encoder}-{args.format_type}"
 
@@ -62,10 +52,6 @@ def generate_output_file(args):
 if __name__ == "__main__":
     source_file = f"../embeddings/{args.form}/{args.encoder}-{args.format_type}/{args.emb_file_name}.jsonl"
     output_file = generate_output_file(args)
-    # output_dir = generate_output_dir(args)
-    # output_file = f"{output_dir}/{args.emb_file_name}.jsonl"
-
-    # os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     filter_embeddings(args, source_file, output_file)
 
