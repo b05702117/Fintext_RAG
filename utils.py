@@ -171,7 +171,7 @@ def retrieve_paragraph_from_docid(docid):
             data = json.loads(line)
             if data["id"] == docid:
                 return data["contents"]
-    print("Paragraph not found.")
+    print(f"Paragraph not found. {docid}")
     return None
 
 def convert_docid_to_title(docid):
