@@ -346,6 +346,9 @@ def print_hits(hits, display_top_n=10):
     print()
 
 def output_hits(hits, output_file):
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    
     with open(output_file, 'w') as f:
         for hit in hits:
             result = {
