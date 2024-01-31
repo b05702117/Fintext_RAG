@@ -15,6 +15,7 @@ parser.add_argument("--index_type", type=str, required=True)
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
+parser.add_argument("--target_paragraph", type=str, default=None) # para5
 parser.add_argument("--filter_name", type=str, default=None)
 
 args = parser.parse_args()
@@ -136,6 +137,7 @@ def main():
     cik = args.cik
     target_company = cik_to_company[cik]
     target_item = args.target_item
+    target_paragraph = args.target_paragraph
     target_year = args.target_year
 
     # instruction should be different for different model type
@@ -146,7 +148,11 @@ def main():
 
     target_file_name = get_10K_file_name(cik, target_year)
 
-    search_pattern = f"*_{target_item}_para*" # "20220426_10-Q_789019_part1_item2_para492"
+    if target_paragraph:
+        search_pattern = f"*_{target_item}_{target_paragraph}"
+    else:
+        search_pattern = f"*_{target_item}_para*" # "20220426_10-Q_789019_part1_item2_para492"
+    
     with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
         for line in open_file:
             data = json.loads(line)
