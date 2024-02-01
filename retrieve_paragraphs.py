@@ -11,7 +11,7 @@ from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--model", type=str, required=True, choices=["dense", "sparse"])
-parser.add_argument("--index_type", type=str, required=True)
+parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title"])
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
@@ -167,7 +167,8 @@ def main():
 
                 index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
 
-                output_file = os.path.join(ROOT, 'retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
+                
+                output_file = os.path.join('retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
                 output_hits(hits, output_file)
 
 if __name__ == "__main__":
