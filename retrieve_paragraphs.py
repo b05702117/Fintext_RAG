@@ -15,8 +15,10 @@ parser.add_argument("--index_type", type=str, required=True, choices=["multi_fie
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
+parser.add_argument("--k", type=int, default=10)
 parser.add_argument("--target_paragraph", type=str, default=None) # para5
 parser.add_argument("--filter_name", type=str, default=None)
+parser.add_argument("--output_jsonl_results", action='store_true', default=False) # ouput the retrieval results to view the retrieved paragraphs
 
 args = parser.parse_args()
 
@@ -95,7 +97,7 @@ def get_index_name(model_type, index_type, filter_name=None):
     return index_name
     
 
-def get_retriever(model_type, index_type, filter_name=None):
+def get_retriever(model_type, index_type, k, filter_name=None):
     if model_type not in model_mapping:
         raise ValueError(f"Unknown model type: {model_type}")
     
@@ -104,12 +106,26 @@ def get_retriever(model_type, index_type, filter_name=None):
 
     if model_type == "sparse":
         searcher = LuceneSearcher(f"{INDEX_DIR}/{index_name}")
-        return SparseDocumentRetriever(searcher)
+        return SparseDocumentRetriever(searcher, k=k)
 
     elif model_type == "dense":
         query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
         searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
-        return DenseDocumentRetriever(searcher, query_encoder.tokenizer)
+        return DenseDocumentRetriever(searcher, query_encoder.tokenizer, k=k)
+
+# TODO: output_hits for TREC format
+def output_hits_trec(hits, target_id, output_file, index_type, filter_name=None):
+    # {query_id} Q0 {doc_id} {rank} {score} {index_name}
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
+    if filter_name is not None:
+        index_name = f"{index_type}-{filter_name}"
+    else:
+        index_name = index_type
+
+    with open(output_file, 'w') as f:
+        for i in range(len(hits)):
+            f.write(f"{target_id} Q0 {hits[i].docid} {i+1} {hits[i].score} {index_name}\n")
 
 def output_hits(hits, output_file):
     # Ensure the directory exists
@@ -132,7 +148,7 @@ def main():
     filter_name = args.filter_name
     print(model_type, index_type, filter_name)
 
-    retriever = get_retriever(model_type, index_type, filter_name=filter_name)
+    retriever = get_retriever(model_type, index_type, k=args.k, filter_name=filter_name)
 
     cik = args.cik
     target_company = cik_to_company[cik]
@@ -167,9 +183,12 @@ def main():
 
                 index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
 
-                
-                output_file = os.path.join('retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
-                output_hits(hits, output_file)
+                output_file_trec = os.path.join('retrieval_results_trec', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.txt')
+                output_hits_trec(hits, data["id"], output_file_trec, index_type, filter_name)
+
+                if args.output_jsonl_results:
+                    output_file = os.path.join('retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
+                    output_hits(hits, output_file)
 
 if __name__ == "__main__":
     main()

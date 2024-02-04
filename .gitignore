@@ -5,6 +5,7 @@ collections/10Q/*
 Jsonl_Data/*.jsonl
 indexes/*
 retrieval_results/*
+retrieval_results_trec/*
 Archive/*
 downloads/*
 highlighting_results/*
