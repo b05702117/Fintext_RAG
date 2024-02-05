@@ -110,3 +110,8 @@ It represents where the target paragraphs come from
 * Each file is named to represent the id of the target paragraph.
 * The contents of each file consist of the top-k retrieval results related to that specific paragraph. 
 
+## Current filter applied to dense retrieval:
+* Suppose the target paragraphs are from 200406's 2020 10-K item7. The retrieval corpus should exclude paragraphs from its item7 in 2020. 
+* Applied filter:
+    1. year between 2018 - 2020
+    2. exclude cik=='200406' and year=='2020' and item == 'item7'
