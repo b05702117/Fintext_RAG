@@ -16,7 +16,7 @@ python retrieve_paragraphs.py \
     --target_item item7 \
     --k 10 \
     --target_paragraph para5 \
-    --filter_name title-year2018_2022-filtered_out-cik1045810-year2022_2022-item7 \
+    --filter_name year2018_2022-filtered_out-cik1045810-year2022_2022-item7 \
     --output_jsonl_results
 ```
 
