@@ -3,7 +3,7 @@ import json
 import fnmatch
 import argparse
 from pyserini.search.lucene import LuceneSearcher
-from pyserini.search.faiss import FaissSearcher, DprQueryEncoder
+from pyserini.search.faiss import FaissSearcher
 from models import DenseDocumentRetriever, SparseDocumentRetriever, output_hits
 from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
 from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_from_docid
@@ -11,7 +11,9 @@ from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--model", type=str, required=True, choices=["dense", "sparse"])
-parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title"])
+parser.add_argument("--d_encoder", type=str, required=False, help="Document encoder model name") # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
+parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
+parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title", "ner", "ner_concat"])
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
@@ -30,12 +32,14 @@ model_mapping = {
 sparse_index_mapping = {
     "multi_fields": "multi_fields",
     "sparse_title": "sparse_title", 
+    "ner": "ner"
 }
 
 dense_index_mapping = {
-    "basic": "dpr-ctx_encoder-multiset-base-basic",
-    "meta_data": "dpr-ctx_encoder-multiset-base-meta_data",
-    "title": "dpr-ctx_encoder-multiset-base-title"
+    "basic": "basic",
+    "meta_data": "meta_data",
+    "title": "title", 
+    "ner_concat": "ner_concat"
 }
 
 with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
@@ -89,7 +93,9 @@ def get_index_name(model_type, index_type, filter_name=None):
     elif model_type == "dense":
         if index_type not in dense_index_mapping:
             raise ValueError(f"Invalid index: {index_type} for dense retriever")
-        index_name = dense_index_mapping[index_type]
+        
+        encoder_name = args.d_encoder.split('/')[-1] # potential bug
+        index_name = f"{encoder_name}-{dense_index_mapping[index_type]}"
 
     if filter_name is not None:
         index_name += f"-{filter_name}"
@@ -109,19 +115,21 @@ def get_retriever(model_type, index_type, k, filter_name=None):
         return SparseDocumentRetriever(searcher, k=k)
 
     elif model_type == "dense":
-        query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
-        searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
-        return DenseDocumentRetriever(searcher, query_encoder.tokenizer, k=k)
+        # query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
+        # searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
+        print(f"Query encoder: {args.q_encoder}")
+        searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", args.q_encoder)
+        return DenseDocumentRetriever(searcher, k=k)
 
-# TODO: output_hits for TREC format
-def output_hits_trec(hits, target_id, output_file, index_type, filter_name=None):
+
+def output_hits_trec(hits, target_id, output_file, index_name):
     # {query_id} Q0 {doc_id} {rank} {score} {index_name}
     # Ensure the directory exists
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
-    if filter_name is not None:
-        index_name = f"{index_type}-{filter_name}"
-    else:
-        index_name = index_type
+    # if filter_name is not None:
+    #     index_name = f"{index_type}-{filter_name}"
+    # else:
+    #     index_name = index_type
 
     with open(output_file, 'w') as f:
         for i in range(len(hits)):
@@ -169,25 +177,32 @@ def main():
     else:
         search_pattern = f"*_{target_item}_para*" # "20220426_10-Q_789019_part1_item2_para492"
     
-    with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
+    
+    base_target_file_dir = os.path.dirname(FORMMATED_DIR)
+    preprocessed_target_file_dir = os.path.join(base_target_file_dir, index_type)
+    print("preprocessed_target_file_dir:", preprocessed_target_file_dir)
+    # with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
+    with open(os.path.join(preprocessed_target_file_dir, target_file_name), "r") as open_file:
         for line in open_file:
             data = json.loads(line)
             if fnmatch.fnmatch(data["id"], search_pattern):
                 print(f"start searching for {data['id']}")
                 
-                target_title = convert_docid_to_title(data["id"])
+                target_title = convert_docid_to_title(data["id"]) # retrieve時沒有concat title
                 target_paragraph = data["contents"]
                 
                 full_query = f"{instruction}; {target_paragraph}"
+                # print(full_query)
                 hits = retriever.search_documents(full_query)
 
-                index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
+                index_name = get_index_name(model_type, index_type, filter_name)
+                # index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
 
-                output_file_trec = os.path.join('retrieval_results_trec', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.txt')
-                output_hits_trec(hits, data["id"], output_file_trec, index_type, filter_name)
+                output_file_trec = os.path.join('retrieval_results_trec', f"{cik}_{target_year}", index_name, data["id"] + '.txt')
+                output_hits_trec(hits, data["id"], output_file_trec, index_name)
 
                 if args.output_jsonl_results:
-                    output_file = os.path.join('retrieval_results', f"{cik}_{target_year}", index_type_with_filter, data["id"] + '.jsonl')
+                    output_file = os.path.join('retrieval_results', f"{cik}_{target_year}", index_name, data["id"] + '.jsonl')
                     output_hits(hits, output_file)
 
 if __name__ == "__main__":

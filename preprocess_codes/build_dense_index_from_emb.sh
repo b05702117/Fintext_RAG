@@ -1,7 +1,7 @@
 # /bin/bash
 
 FORM=$1                 # 10Q or 10K
-ENCODER=$2              # dpr-ctx_encoder-multiset-base
+ENCODER=$2              # dpr-ctx_encoder-multiset-base; all-MiniLM-L6-v2
 FORMAT_TYPE=$3          # basic, meta_data, title
 FILTER_NAME=${4:-null}  # year2018_2019
 

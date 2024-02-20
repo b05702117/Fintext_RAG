@@ -9,7 +9,7 @@ from transformers import AutoTokenizer
 from pyserini.search.lucene import LuceneSearcher
 from cnc_highlighting.encode import BertForHighlightPrediction
 
-K = 100 # top k documents to retrieve
+K = 50 # top k documents to retrieve
 
 class QAPipeline:
     ''' TODO '''
@@ -38,11 +38,11 @@ class HighlightPipeline:
 
 
 class DenseDocumentRetriever: 
-    def __init__(self, searcher, q_tokenizer, docs_dir=FORMMATED_DIR, k=K):
+    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
         self.docs_dir = docs_dir
         self.k = k
-        self.q_tokenizer = q_tokenizer # q_tokenizer is used to truncate the query to the maximum length
+        self.q_tokenizer = searcher.query_encoder.tokenizer
     
     def get_document_content(self, docid):
         ''' return the paragraph content given the docid from raw jsonl files '''
@@ -198,7 +198,8 @@ class DprHighlighter:
             texts=targets,
             padding=True if len(targets) > 1 else False,
             return_tensors="pt", 
-            truncation=True             # TODO: handle paragraph that is too long
+            truncation=True,            # TODO: handle paragraph that is too long
+            max_length=512
         )
         
         outputs = self.model(**encoded_inputs)
@@ -206,10 +207,10 @@ class DprHighlighter:
         return encoded_inputs, outputs
     
     def output_highlighting_results(self, output_file, results):
-        with open(os.path.join(ROOT, 'highlighting_results', output_file), 'w') as f:
+        with open(os.path.join('highlighting_results', output_file), 'w') as f:
             json.dump(results, f)
 
-    def visualize_highlight_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits, output_file=None):
+    def visualize_highlight_span(self, encoded_inputs, ref_ids, relevance_logits, start_logits, end_logits, output_file_path=None):
         results = []
         num_ref = start_logits.shape[0]
 
@@ -238,8 +239,9 @@ class DprHighlighter:
             print(f"{relevance_probs[i]:.4f} reference {ref_ids[i]}:")
             print(f"start_idx: {start_idx}, end_idx: {end_idx}, span: {highlighted_span}")
 
-        if output_file:
-            with open(os.path.join(ROOT, 'highlighting_results', output_file), 'w') as f:
+        if output_file_path:
+            os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
+            with open(output_file_path, 'w') as f:
                 for result in results:
                     json.dump(result, f)
                     f.write('\n')

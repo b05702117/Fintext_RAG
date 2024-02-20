@@ -4,9 +4,9 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--form", type=str, required=True, choices=["10K", "10Q"])
-parser.add_argument("--source_dir_name", type=str, required=True) # the folder name of the source embeddings, e.g. "dpr-ctx_encoder-multiset-base-title"
 # parser.add_argument("--encoder", type=str, required=True, choices=["dpr-ctx_encoder-multiset-base"])
 # parser.add_argument("--format_type", type=str, required=True, choices=["basic", "meta_data", "title"]) # basic, meta_data, title
+parser.add_argument("--source_dir_name", type=str, required=True) # the folder name of the source embeddings, e.g. "dpr-ctx_encoder-multiset-base-title"
 parser.add_argument("--emb_file_name", type=str, default="embeddings")
 parser.add_argument("--cik", type=str)
 parser.add_argument("--start_year", type=int)
