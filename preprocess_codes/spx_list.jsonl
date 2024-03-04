@@ -1,0 +1,503 @@
+{"Symbol": "A", "Security": "Agilent Technologies", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1090872}
+{"Symbol": "AAL", "Security": "American Airlines Group", "Sector": "Industrials", "Sub-Industry": "Passenger Airlines", "CIK": 6201}
+{"Symbol": "AAPL", "Security": "Apple Inc.", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 320193}
+{"Symbol": "ABBV", "Security": "AbbVie", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 1551152}
+{"Symbol": "ABNB", "Security": "Airbnb", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1559720}
+{"Symbol": "ABT", "Security": "Abbott", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1800}
+{"Symbol": "ACGL", "Security": "Arch Capital Group", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 947484}
+{"Symbol": "ACN", "Security": "Accenture", "Sector": "Information Technology", "Sub-Industry": "IT Consulting & Other Services", "CIK": 1467373}
+{"Symbol": "ADBE", "Security": "Adobe Inc.", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 796343}
+{"Symbol": "ADI", "Security": "Analog Devices", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 6281}
+{"Symbol": "ADM", "Security": "Archer-Daniels-Midland", "Sector": "Consumer Staples", "Sub-Industry": "Agricultural Products & Services", "CIK": 7084}
+{"Symbol": "ADP", "Security": "Automated Data Processing", "Sector": "Industrials", "Sub-Industry": "Human Resource & Employment Services", "CIK": 8670}
+{"Symbol": "ADSK", "Security": "Autodesk", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 769397}
+{"Symbol": "AEE", "Security": "Ameren", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1002910}
+{"Symbol": "AEP", "Security": "American Electric Power", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 4904}
+{"Symbol": "AES", "Security": "AES Corporation", "Sector": "Utilities", "Sub-Industry": "Independent Power Producers & Energy Traders", "CIK": 874761}
+{"Symbol": "AFL", "Security": "Aflac", "Sector": "Financials", "Sub-Industry": "Life & Health Insurance", "CIK": 4977}
+{"Symbol": "AIG", "Security": "American International Group", "Sector": "Financials", "Sub-Industry": "Multi-line Insurance", "CIK": 5272}
+{"Symbol": "AIZ", "Security": "Assurant", "Sector": "Financials", "Sub-Industry": "Multi-line Insurance", "CIK": 1267238}
+{"Symbol": "AJG", "Security": "Arthur J. Gallagher & Co.", "Sector": "Financials", "Sub-Industry": "Insurance Brokers", "CIK": 354190}
+{"Symbol": "AKAM", "Security": "Akamai", "Sector": "Information Technology", "Sub-Industry": "Internet Services & Infrastructure", "CIK": 1086222}
+{"Symbol": "ALB", "Security": "Albemarle Corporation", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 915913}
+{"Symbol": "ALGN", "Security": "Align Technology", "Sector": "Health Care", "Sub-Industry": "Health Care Supplies", "CIK": 1097149}
+{"Symbol": "ALK", "Security": "Alaska Air Group", "Sector": "Industrials", "Sub-Industry": "Passenger Airlines", "CIK": 766421}
+{"Symbol": "ALL", "Security": "Allstate", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 899051}
+{"Symbol": "ALLE", "Security": "Allegion", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 1579241}
+{"Symbol": "AMAT", "Security": "Applied Materials", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 6951}
+{"Symbol": "AMCR", "Security": "Amcor", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 1748790}
+{"Symbol": "AMD", "Security": "Advanced Micro Devices", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 2488}
+{"Symbol": "AME", "Security": "Ametek", "Sector": "Industrials", "Sub-Industry": "Electrical Components & Equipment", "CIK": 1037868}
+{"Symbol": "AMGN", "Security": "Amgen", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 318154}
+{"Symbol": "AMP", "Security": "Ameriprise Financial", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 820027}
+{"Symbol": "AMT", "Security": "American Tower", "Sector": "Real Estate", "Sub-Industry": "Telecom Tower REITs", "CIK": 1053507}
+{"Symbol": "AMZN", "Security": "Amazon", "Sector": "Consumer Discretionary", "Sub-Industry": "Broadline Retail", "CIK": 1018724}
+{"Symbol": "ANET", "Security": "Arista Networks", "Sector": "Information Technology", "Sub-Industry": "Communications Equipment", "CIK": 1596532}
+{"Symbol": "ANSS", "Security": "Ansys", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 1013462}
+{"Symbol": "AON", "Security": "Aon", "Sector": "Financials", "Sub-Industry": "Insurance Brokers", "CIK": 315293}
+{"Symbol": "AOS", "Security": "A. O. Smith", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 91142}
+{"Symbol": "APA", "Security": "APA Corporation", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 1841666}
+{"Symbol": "APD", "Security": "Air Products and Chemicals", "Sector": "Materials", "Sub-Industry": "Industrial Gases", "CIK": 2969}
+{"Symbol": "APH", "Security": "Amphenol", "Sector": "Information Technology", "Sub-Industry": "Electronic Components", "CIK": 820313}
+{"Symbol": "APTV", "Security": "Aptiv", "Sector": "Consumer Discretionary", "Sub-Industry": "Automotive Parts & Equipment", "CIK": 1521332}
+{"Symbol": "ARE", "Security": "Alexandria Real Estate Equities", "Sector": "Real Estate", "Sub-Industry": "Office REITs", "CIK": 1035443}
+{"Symbol": "ATO", "Security": "Atmos Energy", "Sector": "Utilities", "Sub-Industry": "Gas Utilities", "CIK": 731802}
+{"Symbol": "AVB", "Security": "AvalonBay Communities", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 915912}
+{"Symbol": "AVGO", "Security": "Broadcom Inc.", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1730168}
+{"Symbol": "AVY", "Security": "Avery Dennison", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 8818}
+{"Symbol": "AWK", "Security": "American Water Works", "Sector": "Utilities", "Sub-Industry": "Water Utilities", "CIK": 1410636}
+{"Symbol": "AXON", "Security": "Axon Enterprise", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 1069183}
+{"Symbol": "AXP", "Security": "American Express", "Sector": "Financials", "Sub-Industry": "Consumer Finance", "CIK": 4962}
+{"Symbol": "AZO", "Security": "AutoZone", "Sector": "Consumer Discretionary", "Sub-Industry": "Automotive Retail", "CIK": 866787}
+{"Symbol": "BA", "Security": "Boeing", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 12927}
+{"Symbol": "BAC", "Security": "Bank of America", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 70858}
+{"Symbol": "BALL", "Security": "Ball Corporation", "Sector": "Materials", "Sub-Industry": "Metal, Glass & Plastic Containers", "CIK": 9389}
+{"Symbol": "BAX", "Security": "Baxter International", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 10456}
+{"Symbol": "BBWI", "Security": "Bath & Body Works, Inc.", "Sector": "Consumer Discretionary", "Sub-Industry": "Other Specialty Retail", "CIK": 701985}
+{"Symbol": "BBY", "Security": "Best Buy", "Sector": "Consumer Discretionary", "Sub-Industry": "Computer & Electronics Retail", "CIK": 764478}
+{"Symbol": "BDX", "Security": "Becton Dickinson", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 10795}
+{"Symbol": "BEN", "Security": "Franklin Templeton", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 38777}
+{"Symbol": "BF.B", "Security": "Brown\u0096Forman", "Sector": "Consumer Staples", "Sub-Industry": "Distillers & Vintners", "CIK": 14693}
+{"Symbol": "BG", "Security": "Bunge Global SA", "Sector": "Consumer Staples", "Sub-Industry": "Agricultural Products & Services", "CIK": 1996862}
+{"Symbol": "BIIB", "Security": "Biogen", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 875045}
+{"Symbol": "BIO", "Security": "Bio-Rad", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 12208}
+{"Symbol": "BK", "Security": "Bank of New York Mellon", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 1390777}
+{"Symbol": "BKNG", "Security": "Booking Holdings", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1075531}
+{"Symbol": "BKR", "Security": "Baker Hughes", "Sector": "Energy", "Sub-Industry": "Oil & Gas Equipment & Services", "CIK": 1701605}
+{"Symbol": "BLK", "Security": "BlackRock", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 1364742}
+{"Symbol": "BMY", "Security": "Bristol Myers Squibb", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 14272}
+{"Symbol": "BR", "Security": "Broadridge Financial Solutions", "Sector": "Industrials", "Sub-Industry": "Data Processing & Outsourced Services", "CIK": 1383312}
+{"Symbol": "BRK.B", "Security": "Berkshire Hathaway", "Sector": "Financials", "Sub-Industry": "Multi-Sector Holdings", "CIK": 1067983}
+{"Symbol": "BRO", "Security": "Brown & Brown", "Sector": "Financials", "Sub-Industry": "Insurance Brokers", "CIK": 79282}
+{"Symbol": "BSX", "Security": "Boston Scientific", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 885725}
+{"Symbol": "BWA", "Security": "BorgWarner", "Sector": "Consumer Discretionary", "Sub-Industry": "Automotive Parts & Equipment", "CIK": 908255}
+{"Symbol": "BX", "Security": "Blackstone", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 1393818}
+{"Symbol": "BXP", "Security": "Boston Properties", "Sector": "Real Estate", "Sub-Industry": "Office REITs", "CIK": 1037540}
+{"Symbol": "C", "Security": "Citigroup", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 831001}
+{"Symbol": "CAG", "Security": "Conagra Brands", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 23217}
+{"Symbol": "CAH", "Security": "Cardinal Health", "Sector": "Health Care", "Sub-Industry": "Health Care Distributors", "CIK": 721371}
+{"Symbol": "CARR", "Security": "Carrier Global", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 1783180}
+{"Symbol": "CAT", "Security": "Caterpillar Inc.", "Sector": "Industrials", "Sub-Industry": "Construction Machinery & Heavy Transportation Equipment", "CIK": 18230}
+{"Symbol": "CB", "Security": "Chubb Limited", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 896159}
+{"Symbol": "CBOE", "Security": "Cboe Global Markets", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1374310}
+{"Symbol": "CBRE", "Security": "CBRE Group", "Sector": "Real Estate", "Sub-Industry": "Real Estate Services", "CIK": 1138118}
+{"Symbol": "CCI", "Security": "Crown Castle", "Sector": "Real Estate", "Sub-Industry": "Telecom Tower REITs", "CIK": 1051470}
+{"Symbol": "CCL", "Security": "Carnival", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 815097}
+{"Symbol": "CDAY", "Security": "Ceridian", "Sector": "Industrials", "Sub-Industry": "Human Resource & Employment Services", "CIK": 1725057}
+{"Symbol": "CDNS", "Security": "Cadence Design Systems", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 813672}
+{"Symbol": "CDW", "Security": "CDW", "Sector": "Information Technology", "Sub-Industry": "Technology Distributors", "CIK": 1402057}
+{"Symbol": "CE", "Security": "Celanese", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 1306830}
+{"Symbol": "CEG", "Security": "Constellation Energy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 1868275}
+{"Symbol": "CF", "Security": "CF Industries", "Sector": "Materials", "Sub-Industry": "Fertilizers & Agricultural Chemicals", "CIK": 1324404}
+{"Symbol": "CFG", "Security": "Citizens Financial Group", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 759944}
+{"Symbol": "CHD", "Security": "Church & Dwight", "Sector": "Consumer Staples", "Sub-Industry": "Household Products", "CIK": 313927}
+{"Symbol": "CHRW", "Security": "CH Robinson", "Sector": "Industrials", "Sub-Industry": "Air Freight & Logistics", "CIK": 1043277}
+{"Symbol": "CHTR", "Security": "Charter Communications", "Sector": "Communication Services", "Sub-Industry": "Cable & Satellite", "CIK": 1091667}
+{"Symbol": "CI", "Security": "Cigna", "Sector": "Health Care", "Sub-Industry": "Health Care Services", "CIK": 1739940}
+{"Symbol": "CINF", "Security": "Cincinnati Financial", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 20286}
+{"Symbol": "CL", "Security": "Colgate-Palmolive", "Sector": "Consumer Staples", "Sub-Industry": "Household Products", "CIK": 21665}
+{"Symbol": "CLX", "Security": "Clorox", "Sector": "Consumer Staples", "Sub-Industry": "Household Products", "CIK": 21076}
+{"Symbol": "CMA", "Security": "Comerica", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 28412}
+{"Symbol": "CMCSA", "Security": "Comcast", "Sector": "Communication Services", "Sub-Industry": "Cable & Satellite", "CIK": 1166691}
+{"Symbol": "CME", "Security": "CME Group", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1156375}
+{"Symbol": "CMG", "Security": "Chipotle Mexican Grill", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 1058090}
+{"Symbol": "CMI", "Security": "Cummins", "Sector": "Industrials", "Sub-Industry": "Construction Machinery & Heavy Transportation Equipment", "CIK": 26172}
+{"Symbol": "CMS", "Security": "CMS Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 811156}
+{"Symbol": "CNC", "Security": "Centene Corporation", "Sector": "Health Care", "Sub-Industry": "Managed Health Care", "CIK": 1071739}
+{"Symbol": "CNP", "Security": "CenterPoint Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1130310}
+{"Symbol": "COF", "Security": "Capital One", "Sector": "Financials", "Sub-Industry": "Consumer Finance", "CIK": 927628}
+{"Symbol": "COO", "Security": "CooperCompanies", "Sector": "Health Care", "Sub-Industry": "Health Care Supplies", "CIK": 711404}
+{"Symbol": "COP", "Security": "ConocoPhillips", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 1163165}
+{"Symbol": "COR", "Security": "Cencora", "Sector": "Health Care", "Sub-Industry": "Health Care Distributors", "CIK": 1140859}
+{"Symbol": "COST", "Security": "Costco", "Sector": "Consumer Staples", "Sub-Industry": "Consumer Staples Merchandise Retail", "CIK": 909832}
+{"Symbol": "CPB", "Security": "Campbell Soup Company", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 16732}
+{"Symbol": "CPRT", "Security": "Copart", "Sector": "Industrials", "Sub-Industry": "Diversified Support Services", "CIK": 900075}
+{"Symbol": "CPT", "Security": "Camden Property Trust", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 906345}
+{"Symbol": "CRL", "Security": "Charles River Laboratories", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1100682}
+{"Symbol": "CRM", "Security": "Salesforce", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 1108524}
+{"Symbol": "CSCO", "Security": "Cisco", "Sector": "Information Technology", "Sub-Industry": "Communications Equipment", "CIK": 858877}
+{"Symbol": "CSGP", "Security": "CoStar Group", "Sector": "Real Estate", "Sub-Industry": "Real Estate Services", "CIK": 1057352}
+{"Symbol": "CSX", "Security": "CSX", "Sector": "Industrials", "Sub-Industry": "Rail Transportation", "CIK": 277948}
+{"Symbol": "CTAS", "Security": "Cintas", "Sector": "Industrials", "Sub-Industry": "Diversified Support Services", "CIK": 723254}
+{"Symbol": "CTLT", "Security": "Catalent", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 1596783}
+{"Symbol": "CTRA", "Security": "Coterra", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 858470}
+{"Symbol": "CTSH", "Security": "Cognizant", "Sector": "Information Technology", "Sub-Industry": "IT Consulting & Other Services", "CIK": 1058290}
+{"Symbol": "CTVA", "Security": "Corteva", "Sector": "Materials", "Sub-Industry": "Fertilizers & Agricultural Chemicals", "CIK": 1755672}
+{"Symbol": "CVS", "Security": "CVS Health", "Sector": "Health Care", "Sub-Industry": "Health Care Services", "CIK": 64803}
+{"Symbol": "CVX", "Security": "Chevron Corporation", "Sector": "Energy", "Sub-Industry": "Integrated Oil & Gas", "CIK": 93410}
+{"Symbol": "CZR", "Security": "Caesars Entertainment", "Sector": "Consumer Discretionary", "Sub-Industry": "Casinos & Gaming", "CIK": 1590895}
+{"Symbol": "D", "Security": "Dominion Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 715957}
+{"Symbol": "DAL", "Security": "Delta Air Lines", "Sector": "Industrials", "Sub-Industry": "Passenger Airlines", "CIK": 27904}
+{"Symbol": "DD", "Security": "DuPont", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 1666700}
+{"Symbol": "DE", "Security": "John Deere", "Sector": "Industrials", "Sub-Industry": "Agricultural & Farm Machinery", "CIK": 315189}
+{"Symbol": "DFS", "Security": "Discover Financial", "Sector": "Financials", "Sub-Industry": "Consumer Finance", "CIK": 1393612}
+{"Symbol": "DG", "Security": "Dollar General", "Sector": "Consumer Staples", "Sub-Industry": "Consumer Staples Merchandise Retail", "CIK": 29534}
+{"Symbol": "DGX", "Security": "Quest Diagnostics", "Sector": "Health Care", "Sub-Industry": "Health Care Services", "CIK": 1022079}
+{"Symbol": "DHI", "Security": "DR Horton", "Sector": "Consumer Discretionary", "Sub-Industry": "Homebuilding", "CIK": 882184}
+{"Symbol": "DHR", "Security": "Danaher Corporation", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tolls & Services", "CIK": 313616}
+{"Symbol": "DIS", "Security": "Walt Disney", "Sector": "Communication Services", "Sub-Industry": "Movies & Entertainment", "CIK": 1744489}
+{"Symbol": "DLR", "Security": "Digital Realty", "Sector": "Real Estate", "Sub-Industry": "Data Center REITs", "CIK": 1297996}
+{"Symbol": "DLTR", "Security": "Dollar Tree", "Sector": "Consumer Staples", "Sub-Industry": "Consumer Staples Merchandise Retail", "CIK": 935703}
+{"Symbol": "DOV", "Security": "Dover Corporation", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 29905}
+{"Symbol": "DOW", "Security": "Dow Inc.", "Sector": "Materials", "Sub-Industry": "Commodity Chemicals", "CIK": 1751788}
+{"Symbol": "DPZ", "Security": "Domino's", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 1286681}
+{"Symbol": "DRI", "Security": "Darden Restaurants", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 940944}
+{"Symbol": "DTE", "Security": "DTE Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 936340}
+{"Symbol": "DUK", "Security": "Duke Energy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 1326160}
+{"Symbol": "DVA", "Security": "DaVita Inc.", "Sector": "Health Care", "Sub-Industry": "Health Care Services", "CIK": 927066}
+{"Symbol": "DVN", "Security": "Devon Energy", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 1090012}
+{"Symbol": "DXCM", "Security": "Dexcom", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1093557}
+{"Symbol": "EA", "Security": "Electronic Arts", "Sector": "Communication Services", "Sub-Industry": "Interactive Home Entertainment", "CIK": 712515}
+{"Symbol": "EBAY", "Security": "eBay", "Sector": "Consumer Discretionary", "Sub-Industry": "Broadline Retail", "CIK": 1065088}
+{"Symbol": "ECL", "Security": "Ecolab", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 31462}
+{"Symbol": "ED", "Security": "Consolidated Edison", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1047862}
+{"Symbol": "EFX", "Security": "Equifax", "Sector": "Industrials", "Sub-Industry": "Research & Consulting Services", "CIK": 33185}
+{"Symbol": "EG", "Security": "Everest Re", "Sector": "Financials", "Sub-Industry": "Reinsurance", "CIK": 1095073}
+{"Symbol": "EIX", "Security": "Edison International", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 827052}
+{"Symbol": "EL", "Security": "Est?e Lauder Companies (The)", "Sector": "Consumer Staples", "Sub-Industry": "Personal Care Products", "CIK": 1001250}
+{"Symbol": "ELV", "Security": "Elevance Health", "Sector": "Health Care", "Sub-Industry": "Managed Health Care", "CIK": 1156039}
+{"Symbol": "EMN", "Security": "Eastman Chemical Company", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 915389}
+{"Symbol": "EMR", "Security": "Emerson Electric", "Sector": "Industrials", "Sub-Industry": "Electrical Components & Equipment", "CIK": 32604}
+{"Symbol": "ENPH", "Security": "Enphase", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 1463101}
+{"Symbol": "EOG", "Security": "EOG Resources", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 821189}
+{"Symbol": "EPAM", "Security": "EPAM Systems", "Sector": "Information Technology", "Sub-Industry": "IT Consulting & Other Services", "CIK": 1352010}
+{"Symbol": "EQIX", "Security": "Equinix", "Sector": "Real Estate", "Sub-Industry": "Data Center REITs", "CIK": 1101239}
+{"Symbol": "EQR", "Security": "Equity Residential", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 906107}
+{"Symbol": "EQT", "Security": "EQT", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 33213}
+{"Symbol": "ES", "Security": "Eversource", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 72741}
+{"Symbol": "ESS", "Security": "Essex Property Trust", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 920522}
+{"Symbol": "ETN", "Security": "Eaton Corporation", "Sector": "Industrials", "Sub-Industry": "Electrical Components & Equipment", "CIK": 1551182}
+{"Symbol": "ETR", "Security": "Entergy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 65984}
+{"Symbol": "ETSY", "Security": "Etsy", "Sector": "Consumer Discretionary", "Sub-Industry": "Broadline Retail", "CIK": 1370637}
+{"Symbol": "EVRG", "Security": "Evergy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 1711269}
+{"Symbol": "EW", "Security": "Edwards Lifesciences", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1099800}
+{"Symbol": "EXC", "Security": "Exelon", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 1109357}
+{"Symbol": "EXPD", "Security": "Expeditors International", "Sector": "Industrials", "Sub-Industry": "Air Freight & Logistics", "CIK": 746515}
+{"Symbol": "EXPE", "Security": "Expedia Group", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1324424}
+{"Symbol": "EXR", "Security": "Extra Space Storage", "Sector": "Real Estate", "Sub-Industry": "Self-Storage REITs", "CIK": 1289490}
+{"Symbol": "F", "Security": "Ford Motor Company", "Sector": "Consumer Discretionary", "Sub-Industry": "Automobile Manufacturers", "CIK": 37996}
+{"Symbol": "FANG", "Security": "Diamondback Energy", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 1539838}
+{"Symbol": "FAST", "Security": "Fastenal", "Sector": "Industrials", "Sub-Industry": "Trading Companies & Distributors", "CIK": 815556}
+{"Symbol": "FCX", "Security": "Freeport-McMoRan", "Sector": "Materials", "Sub-Industry": "Copper", "CIK": 831259}
+{"Symbol": "FDS", "Security": "FactSet", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1013237}
+{"Symbol": "FDX", "Security": "FedEx", "Sector": "Industrials", "Sub-Industry": "Air Freight & Logistics", "CIK": 1048911}
+{"Symbol": "FE", "Security": "FirstEnergy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 1031296}
+{"Symbol": "FFIV", "Security": "F5, Inc.", "Sector": "Information Technology", "Sub-Industry": "Communications Equipment", "CIK": 1048695}
+{"Symbol": "FI", "Security": "Fiserv", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 798354}
+{"Symbol": "FICO", "Security": "Fair Isaac", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 814547}
+{"Symbol": "FIS", "Security": "Fidelity National Information Services", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1136893}
+{"Symbol": "FITB", "Security": "Fifth Third Bank", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 35527}
+{"Symbol": "FLT", "Security": "Fleetcor", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1175454}
+{"Symbol": "FMC", "Security": "FMC Corporation", "Sector": "Materials", "Sub-Industry": "Fertilizers & Agricultural Chemicals", "CIK": 37785}
+{"Symbol": "FOX", "Security": "Fox Corporation?(Class B)", "Sector": "Communication Services", "Sub-Industry": "Broadcasting", "CIK": 1754301}
+{"Symbol": "FOXA", "Security": "Fox Corporation?(Class A)", "Sector": "Communication Services", "Sub-Industry": "Broadcasting", "CIK": 1754301}
+{"Symbol": "FRT", "Security": "Federal Realty", "Sector": "Real Estate", "Sub-Industry": "Retail REITs", "CIK": 34903}
+{"Symbol": "FSLR", "Security": "First Solar", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1274494}
+{"Symbol": "FTNT", "Security": "Fortinet", "Sector": "Information Technology", "Sub-Industry": "Systems Software", "CIK": 1262039}
+{"Symbol": "FTV", "Security": "Fortive", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 1659166}
+{"Symbol": "GD", "Security": "General Dynamics", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 40533}
+{"Symbol": "GE", "Security": "General Electric", "Sector": "Industrials", "Sub-Industry": "Industrial Conglomerates", "CIK": 40545}
+{"Symbol": "GEHC", "Security": "GE HealthCare", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1932393}
+{"Symbol": "GEN", "Security": "Gen Digital", "Sector": "Information Technology", "Sub-Industry": "Systems Software", "CIK": 849399}
+{"Symbol": "GILD", "Security": "Gilead Sciences", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 882095}
+{"Symbol": "GIS", "Security": "General Mills", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 40704}
+{"Symbol": "GL", "Security": "Globe Life", "Sector": "Financials", "Sub-Industry": "Life & Health Insurance", "CIK": 320335}
+{"Symbol": "GLW", "Security": "Corning Inc.", "Sector": "Information Technology", "Sub-Industry": "Electronic Components", "CIK": 24741}
+{"Symbol": "GM", "Security": "General Motors", "Sector": "Consumer Discretionary", "Sub-Industry": "Automobile Manufacturers", "CIK": 1467858}
+{"Symbol": "GNRC", "Security": "Generac", "Sector": "Industrials", "Sub-Industry": "Electrical Components & Equipment", "CIK": 1474735}
+{"Symbol": "GOOG", "Security": "Alphabet Inc.?(Class C)", "Sector": "Communication Services", "Sub-Industry": "Interactive Media & Services", "CIK": 1652044}
+{"Symbol": "GOOGL", "Security": "Alphabet Inc.?(Class A)", "Sector": "Communication Services", "Sub-Industry": "Interactive Media & Services", "CIK": 1652044}
+{"Symbol": "GPC", "Security": "Genuine Parts Company", "Sector": "Consumer Discretionary", "Sub-Industry": "Distributors", "CIK": 40987}
+{"Symbol": "GPN", "Security": "Global Payments", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1123360}
+{"Symbol": "GRMN", "Security": "Garmin", "Sector": "Consumer Discretionary", "Sub-Industry": "Consumer Electronics", "CIK": 1121788}
+{"Symbol": "GS", "Security": "Goldman Sachs", "Sector": "Financials", "Sub-Industry": "Investment Banking & Brokerage", "CIK": 886982}
+{"Symbol": "GWW", "Security": "W. W. Grainger", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 277135}
+{"Symbol": "HAL", "Security": "Halliburton", "Sector": "Energy", "Sub-Industry": "Oil & Gas Equipment & Services", "CIK": 45012}
+{"Symbol": "HAS", "Security": "Hasbro", "Sector": "Consumer Discretionary", "Sub-Industry": "Leisure Products", "CIK": 46080}
+{"Symbol": "HBAN", "Security": "Huntington Bancshares", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 49196}
+{"Symbol": "HCA", "Security": "HCA Healthcare", "Sector": "Health Care", "Sub-Industry": "Health Care Facilities", "CIK": 860730}
+{"Symbol": "HD", "Security": "Home Depot (The)", "Sector": "Consumer Discretionary", "Sub-Industry": "Home Improvement Retail", "CIK": 354950}
+{"Symbol": "HES", "Security": "Hess Corporation", "Sector": "Energy", "Sub-Industry": "Integrated Oil & Gas", "CIK": 4447}
+{"Symbol": "HIG", "Security": "Hartford (The)", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 874766}
+{"Symbol": "HII", "Security": "Huntington Ingalls Industries", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 1501585}
+{"Symbol": "HLT", "Security": "Hilton Worldwide", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1585689}
+{"Symbol": "HOLX", "Security": "Hologic", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 859737}
+{"Symbol": "HON", "Security": "Honeywell", "Sector": "Industrials", "Sub-Industry": "Industrial Conglomerates", "CIK": 773840}
+{"Symbol": "HPE", "Security": "Hewlett Packard Enterprise", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 1645590}
+{"Symbol": "HPQ", "Security": "HP Inc.", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 47217}
+{"Symbol": "HRL", "Security": "Hormel Foods", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 48465}
+{"Symbol": "HSIC", "Security": "Henry Schein", "Sector": "Health Care", "Sub-Industry": "Health Care Distributors", "CIK": 1000228}
+{"Symbol": "HST", "Security": "Host Hotels & Resorts", "Sector": "Real Estate", "Sub-Industry": "Hotel & Resort REITs", "CIK": 1070750}
+{"Symbol": "HSY", "Security": "Hershey's", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 47111}
+{"Symbol": "HUBB", "Security": "Hubbell Incorporated", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 48898}
+{"Symbol": "HUM", "Security": "Humana", "Sector": "Health Care", "Sub-Industry": "Managed Health Care", "CIK": 49071}
+{"Symbol": "HWM", "Security": "Howmet Aerospace", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 4281}
+{"Symbol": "IBM", "Security": "IBM", "Sector": "Information Technology", "Sub-Industry": "IT Consulting & Other Services", "CIK": 51143}
+{"Symbol": "ICE", "Security": "Intercontinental Exchange", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1571949}
+{"Symbol": "IDXX", "Security": "Idexx Laboratories", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 874716}
+{"Symbol": "IEX", "Security": "IDEX Corporation", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 832101}
+{"Symbol": "IFF", "Security": "International Flavors & Fragrances", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 51253}
+{"Symbol": "ILMN", "Security": "Illumina", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1110803}
+{"Symbol": "INCY", "Security": "Incyte", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 879169}
+{"Symbol": "INTC", "Security": "Intel", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 50863}
+{"Symbol": "INTU", "Security": "Intuit", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 896878}
+{"Symbol": "INVH", "Security": "Invitation Homes", "Sector": "Real Estate", "Sub-Industry": "Single-Family Residential REITs", "CIK": 1687229}
+{"Symbol": "IP", "Security": "International Paper", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 51434}
+{"Symbol": "IPG", "Security": "Interpublic Group of Companies (The)", "Sector": "Communication Services", "Sub-Industry": "Advertising", "CIK": 51644}
+{"Symbol": "IQV", "Security": "IQVIA", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1478242}
+{"Symbol": "IR", "Security": "Ingersoll Rand", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 1699150}
+{"Symbol": "IRM", "Security": "Iron Mountain", "Sector": "Real Estate", "Sub-Industry": "Other Specialized REITs", "CIK": 1020569}
+{"Symbol": "ISRG", "Security": "Intuitive Surgical", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1035267}
+{"Symbol": "IT", "Security": "Gartner", "Sector": "Information Technology", "Sub-Industry": "IT Consulting & Other Services", "CIK": 749251}
+{"Symbol": "ITW", "Security": "Illinois Tool Works", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 49826}
+{"Symbol": "IVZ", "Security": "Invesco", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 914208}
+{"Symbol": "J", "Security": "Jacobs Solutions", "Sector": "Industrials", "Sub-Industry": "Construction & Engineering", "CIK": 52988}
+{"Symbol": "JBHT", "Security": "J.B. Hunt", "Sector": "Industrials", "Sub-Industry": "Cargo Ground Transportation", "CIK": 728535}
+{"Symbol": "JCI", "Security": "Johnson Controls", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 833444}
+{"Symbol": "JKHY", "Security": "Jack Henry & Associates", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 779152}
+{"Symbol": "JNJ", "Security": "Johnson & Johnson", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 200406}
+{"Symbol": "JNPR", "Security": "Juniper Networks", "Sector": "Information Technology", "Sub-Industry": "Communications Equipment", "CIK": 1043604}
+{"Symbol": "JPM", "Security": "JPMorgan Chase", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 19617}
+{"Symbol": "K", "Security": "Kellanova", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 55067}
+{"Symbol": "KDP", "Security": "Keurig Dr Pepper", "Sector": "Consumer Staples", "Sub-Industry": "Soft Drinks & Non-alcoholic Beverages", "CIK": 1418135}
+{"Symbol": "KEY", "Security": "KeyCorp", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 91576}
+{"Symbol": "KEYS", "Security": "Keysight", "Sector": "Information Technology", "Sub-Industry": "Electronic Equipment & Instruments", "CIK": 1601046}
+{"Symbol": "KHC", "Security": "Kraft Heinz", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 1637459}
+{"Symbol": "KIM", "Security": "Kimco Realty", "Sector": "Real Estate", "Sub-Industry": "Retail REITs", "CIK": 879101}
+{"Symbol": "KLAC", "Security": "KLA Corporation", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 319201}
+{"Symbol": "KMB", "Security": "Kimberly-Clark", "Sector": "Consumer Staples", "Sub-Industry": "Household Products", "CIK": 55785}
+{"Symbol": "KMI", "Security": "Kinder Morgan", "Sector": "Energy", "Sub-Industry": "Oil & Gas Storage & Transportation", "CIK": 1506307}
+{"Symbol": "KMX", "Security": "CarMax", "Sector": "Consumer Discretionary", "Sub-Industry": "Automotive Retail", "CIK": 1170010}
+{"Symbol": "KO", "Security": "Coca-Cola Company (The)", "Sector": "Consumer Staples", "Sub-Industry": "Soft Drinks & Non-alcoholic Beverages", "CIK": 21344}
+{"Symbol": "KR", "Security": "Kroger", "Sector": "Consumer Staples", "Sub-Industry": "Food Retail", "CIK": 56873}
+{"Symbol": "KVUE", "Security": "Kenvue", "Sector": "Consumer Staples", "Sub-Industry": "Personal Care Products", "CIK": 1944048}
+{"Symbol": "L", "Security": "Loews Corporation", "Sector": "Financials", "Sub-Industry": "Multi-line Insurance", "CIK": 60086}
+{"Symbol": "LDOS", "Security": "Leidos", "Sector": "Industrials", "Sub-Industry": "Diversified Support Services", "CIK": 1336920}
+{"Symbol": "LEN", "Security": "Lennar", "Sector": "Consumer Discretionary", "Sub-Industry": "Homebuilding", "CIK": 920760}
+{"Symbol": "LH", "Security": "LabCorp", "Sector": "Health Care", "Sub-Industry": "Health Care Services", "CIK": 920148}
+{"Symbol": "LHX", "Security": "L3Harris", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 202058}
+{"Symbol": "LIN", "Security": "Linde plc", "Sector": "Materials", "Sub-Industry": "Industrial Gases", "CIK": 1707925}
+{"Symbol": "LKQ", "Security": "LKQ Corporation", "Sector": "Consumer Discretionary", "Sub-Industry": "Distributors", "CIK": 1065696}
+{"Symbol": "LLY", "Security": "Eli Lilly and Company", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 59478}
+{"Symbol": "LMT", "Security": "Lockheed Martin", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 936468}
+{"Symbol": "LNT", "Security": "Alliant Energy", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 352541}
+{"Symbol": "LOW", "Security": "Lowe's", "Sector": "Consumer Discretionary", "Sub-Industry": "Home Improvement Retail", "CIK": 60667}
+{"Symbol": "LRCX", "Security": "Lam Research", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 707549}
+{"Symbol": "LULU", "Security": "Lululemon Athletica", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel, Accessories & Luxury Goods", "CIK": 1397187}
+{"Symbol": "LUV", "Security": "Southwest Airlines", "Sector": "Industrials", "Sub-Industry": "Passenger Airlines", "CIK": 92380}
+{"Symbol": "LVS", "Security": "Las Vegas Sands", "Sector": "Consumer Discretionary", "Sub-Industry": "Casinos & Gaming", "CIK": 1300514}
+{"Symbol": "LW", "Security": "Lamb Weston", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 1679273}
+{"Symbol": "LYB", "Security": "LyondellBasell", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 1489393}
+{"Symbol": "LYV", "Security": "Live Nation Entertainment", "Sector": "Communication Services", "Sub-Industry": "Movies & Entertainment", "CIK": 1335258}
+{"Symbol": "MA", "Security": "Mastercard", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1141391}
+{"Symbol": "MAA", "Security": "Mid-America Apartment Communities", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 912595}
+{"Symbol": "MAR", "Security": "Marriott International", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1048286}
+{"Symbol": "MAS", "Security": "Masco", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 62996}
+{"Symbol": "MCD", "Security": "McDonald's", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 63908}
+{"Symbol": "MCHP", "Security": "Microchip Technology", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 827054}
+{"Symbol": "MCK", "Security": "McKesson", "Sector": "Health Care", "Sub-Industry": "Health Care Distributors", "CIK": 927653}
+{"Symbol": "MCO", "Security": "Moody's Corporation", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1059556}
+{"Symbol": "MDLZ", "Security": "Mondelez International", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 1103982}
+{"Symbol": "MDT", "Security": "Medtronic", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1613103}
+{"Symbol": "MET", "Security": "MetLife", "Sector": "Financials", "Sub-Industry": "Life & Health Insurance", "CIK": 1099219}
+{"Symbol": "META", "Security": "Meta Platforms", "Sector": "Communication Services", "Sub-Industry": "Interactive Media & Services", "CIK": 1326801}
+{"Symbol": "MGM", "Security": "MGM Resorts", "Sector": "Consumer Discretionary", "Sub-Industry": "Casinos & Gaming", "CIK": 789570}
+{"Symbol": "MHK", "Security": "Mohawk Industries", "Sector": "Consumer Discretionary", "Sub-Industry": "Home Furnishings", "CIK": 851968}
+{"Symbol": "MKC", "Security": "McCormick & Company", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 63754}
+{"Symbol": "MKTX", "Security": "MarketAxess", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1278021}
+{"Symbol": "MLM", "Security": "Martin Marietta Materials", "Sector": "Materials", "Sub-Industry": "Construction Materials", "CIK": 916076}
+{"Symbol": "MMC", "Security": "Marsh McLennan", "Sector": "Financials", "Sub-Industry": "Insurance Brokers", "CIK": 62709}
+{"Symbol": "MMM", "Security": "3M", "Sector": "Industrials", "Sub-Industry": "Industrial Conglomerates", "CIK": 66740}
+{"Symbol": "MNST", "Security": "Monster Beverage", "Sector": "Consumer Staples", "Sub-Industry": "Soft Drinks & Non-alcoholic Beverages", "CIK": 865752}
+{"Symbol": "MO", "Security": "Altria", "Sector": "Consumer Staples", "Sub-Industry": "Tobacco", "CIK": 764180}
+{"Symbol": "MOH", "Security": "Molina Healthcare", "Sector": "Health Care", "Sub-Industry": "Managed Health Care", "CIK": 1179929}
+{"Symbol": "MOS", "Security": "Mosaic Company (The)", "Sector": "Materials", "Sub-Industry": "Fertilizers & Agricultural Chemicals", "CIK": 1285785}
+{"Symbol": "MPC", "Security": "Marathon Petroleum", "Sector": "Energy", "Sub-Industry": "Oil & Gas Refining & Marketing", "CIK": 1510295}
+{"Symbol": "MPWR", "Security": "Monolithic Power Systems", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1280452}
+{"Symbol": "MRK", "Security": "Merck & Co.", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 310158}
+{"Symbol": "MRNA", "Security": "Moderna", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 1682852}
+{"Symbol": "MRO", "Security": "Marathon Oil", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 101778}
+{"Symbol": "MS", "Security": "Morgan Stanley", "Sector": "Financials", "Sub-Industry": "Investment Banking & Brokerage", "CIK": 895421}
+{"Symbol": "MSCI", "Security": "MSCI", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1408198}
+{"Symbol": "MSFT", "Security": "Microsoft", "Sector": "Information Technology", "Sub-Industry": "Systems Software", "CIK": 789019}
+{"Symbol": "MSI", "Security": "Motorola Solutions", "Sector": "Information Technology", "Sub-Industry": "Communications Equipment", "CIK": 68505}
+{"Symbol": "MTB", "Security": "M&T Bank", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 36270}
+{"Symbol": "MTCH", "Security": "Match Group", "Sector": "Communication Services", "Sub-Industry": "Interactive Media & Services", "CIK": 891103}
+{"Symbol": "MTD", "Security": "Mettler Toledo", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1037646}
+{"Symbol": "MU", "Security": "Micron Technology", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 723125}
+{"Symbol": "NCLH", "Security": "Norwegian Cruise Line Holdings", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 1513761}
+{"Symbol": "NDAQ", "Security": "Nasdaq, Inc.", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 1120193}
+{"Symbol": "NDSN", "Security": "Nordson Corporation", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 72331}
+{"Symbol": "NEE", "Security": "NextEra Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 753308}
+{"Symbol": "NEM", "Security": "Newmont", "Sector": "Materials", "Sub-Industry": "Gold", "CIK": 1164727}
+{"Symbol": "NFLX", "Security": "Netflix", "Sector": "Communication Services", "Sub-Industry": "Movies & Entertainment", "CIK": 1065280}
+{"Symbol": "NI", "Security": "NiSource", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1111711}
+{"Symbol": "NKE", "Security": "Nike, Inc.", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel, Accessories & Luxury Goods", "CIK": 320187}
+{"Symbol": "NOC", "Security": "Northrop Grumman", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 1133421}
+{"Symbol": "NOW", "Security": "ServiceNow", "Sector": "Information Technology", "Sub-Industry": "Systems Software", "CIK": 1373715}
+{"Symbol": "NRG", "Security": "NRG Energy", "Sector": "Utilities", "Sub-Industry": "Independent Power Producers & Energy Traders", "CIK": 1013871}
+{"Symbol": "NSC", "Security": "Norfolk Southern Railway", "Sector": "Industrials", "Sub-Industry": "Rail Transportation", "CIK": 702165}
+{"Symbol": "NTAP", "Security": "NetApp", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 1002047}
+{"Symbol": "NTRS", "Security": "Northern Trust", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 73124}
+{"Symbol": "NUE", "Security": "Nucor", "Sector": "Materials", "Sub-Industry": "Steel", "CIK": 73309}
+{"Symbol": "NVDA", "Security": "Nvidia", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1045810}
+{"Symbol": "NVR", "Security": "NVR, Inc.", "Sector": "Consumer Discretionary", "Sub-Industry": "Homebuilding", "CIK": 906163}
+{"Symbol": "NWS", "Security": "News Corp?(Class B)", "Sector": "Communication Services", "Sub-Industry": "Publishing", "CIK": 1564708}
+{"Symbol": "NWSA", "Security": "News Corp?(Class A)", "Sector": "Communication Services", "Sub-Industry": "Publishing", "CIK": 1564708}
+{"Symbol": "NXPI", "Security": "NXP Semiconductors", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1413447}
+{"Symbol": "O", "Security": "Realty Income", "Sector": "Real Estate", "Sub-Industry": "Retail REITs", "CIK": 726728}
+{"Symbol": "ODFL", "Security": "Old Dominion", "Sector": "Industrials", "Sub-Industry": "Cargo Ground Transportation", "CIK": 878927}
+{"Symbol": "OKE", "Security": "ONEOK", "Sector": "Energy", "Sub-Industry": "Oil & Gas Storage & Transportation", "CIK": 1039684}
+{"Symbol": "OMC", "Security": "Omnicom Group", "Sector": "Communication Services", "Sub-Industry": "Advertising", "CIK": 29989}
+{"Symbol": "ON", "Security": "ON Semiconductor", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1097864}
+{"Symbol": "ORCL", "Security": "Oracle Corporation", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 1341439}
+{"Symbol": "ORLY", "Security": "O'Reilly Auto Parts", "Sector": "Consumer Discretionary", "Sub-Industry": "Automotive Retail", "CIK": 898173}
+{"Symbol": "OTIS", "Security": "Otis Worldwide", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 1781335}
+{"Symbol": "OXY", "Security": "Occidental Petroleum", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 797468}
+{"Symbol": "PANW", "Security": "Palo Alto Networks", "Sector": "Information Technology", "Sub-Industry": "Systems Software", "CIK": 1327567}
+{"Symbol": "PARA", "Security": "Paramount Global", "Sector": "Communication Services", "Sub-Industry": "Movies & Entertainment", "CIK": 813828}
+{"Symbol": "PAYC", "Security": "Paycom", "Sector": "Industrials", "Sub-Industry": "Human Resource & Employment Services", "CIK": 1590955}
+{"Symbol": "PAYX", "Security": "Paychex", "Sector": "Industrials", "Sub-Industry": "Human Resource & Employment Services", "CIK": 723531}
+{"Symbol": "PCAR", "Security": "Paccar", "Sector": "Industrials", "Sub-Industry": "Construction Machinery & Heavy Transportation Equipment", "CIK": 75362}
+{"Symbol": "PCG", "Security": "PG&E Corporation", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1004980}
+{"Symbol": "PEAK", "Security": "Healthpeak", "Sector": "Real Estate", "Sub-Industry": "Health Care REITs", "CIK": 765880}
+{"Symbol": "PEG", "Security": "Public Service Enterprise Group", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 788784}
+{"Symbol": "PEP", "Security": "PepsiCo", "Sector": "Consumer Staples", "Sub-Industry": "Soft Drinks & Non-alcoholic Beverages", "CIK": 77476}
+{"Symbol": "PFE", "Security": "Pfizer", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 78003}
+{"Symbol": "PFG", "Security": "Principal Financial Group", "Sector": "Financials", "Sub-Industry": "Life & Health Insurance", "CIK": 1126328}
+{"Symbol": "PG", "Security": "Procter & Gamble", "Sector": "Consumer Staples", "Sub-Industry": "Personal Care Products", "CIK": 80424}
+{"Symbol": "PGR", "Security": "Progressive Corporation", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 80661}
+{"Symbol": "PH", "Security": "Parker Hannifin", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 76334}
+{"Symbol": "PHM", "Security": "PulteGroup", "Sector": "Consumer Discretionary", "Sub-Industry": "Homebuilding", "CIK": 822416}
+{"Symbol": "PKG", "Security": "Packaging Corporation of America", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 75677}
+{"Symbol": "PLD", "Security": "Prologis", "Sector": "Real Estate", "Sub-Industry": "Industrial REITs", "CIK": 1045609}
+{"Symbol": "PM", "Security": "Philip Morris International", "Sector": "Consumer Staples", "Sub-Industry": "Tobacco", "CIK": 1413329}
+{"Symbol": "PNC", "Security": "PNC Financial Services", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 713676}
+{"Symbol": "PNR", "Security": "Pentair", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 77360}
+{"Symbol": "PNW", "Security": "Pinnacle West", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 764622}
+{"Symbol": "PODD", "Security": "Insulet", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1145197}
+{"Symbol": "POOL", "Security": "Pool Corporation", "Sector": "Consumer Discretionary", "Sub-Industry": "Distributors", "CIK": 945841}
+{"Symbol": "PPG", "Security": "PPG Industries", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 79879}
+{"Symbol": "PPL", "Security": "PPL Corporation", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 922224}
+{"Symbol": "PRU", "Security": "Prudential Financial", "Sector": "Financials", "Sub-Industry": "Life & Health Insurance", "CIK": 1137774}
+{"Symbol": "PSA", "Security": "Public Storage", "Sector": "Real Estate", "Sub-Industry": "Self-Storage REITs", "CIK": 1393311}
+{"Symbol": "PSX", "Security": "Phillips 66", "Sector": "Energy", "Sub-Industry": "Oil & Gas Refining & Marketing", "CIK": 1534701}
+{"Symbol": "PTC", "Security": "PTC", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 857005}
+{"Symbol": "PWR", "Security": "Quanta Services", "Sector": "Industrials", "Sub-Industry": "Construction & Engineering", "CIK": 1050915}
+{"Symbol": "PXD", "Security": "Pioneer Natural Resources", "Sector": "Energy", "Sub-Industry": "Oil & Gas Exploration & Production", "CIK": 1038357}
+{"Symbol": "PYPL", "Security": "PayPal", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1633917}
+{"Symbol": "QCOM", "Security": "Qualcomm", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 804328}
+{"Symbol": "QRVO", "Security": "Qorvo", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 1604778}
+{"Symbol": "RCL", "Security": "Royal Caribbean Group", "Sector": "Consumer Discretionary", "Sub-Industry": "Hotels, Resorts & Cruise Lines", "CIK": 884887}
+{"Symbol": "REG", "Security": "Regency Centers", "Sector": "Real Estate", "Sub-Industry": "Retail REITs", "CIK": 910606}
+{"Symbol": "REGN", "Security": "Regeneron", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 872589}
+{"Symbol": "RF", "Security": "Regions Financial Corporation", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 1281761}
+{"Symbol": "RHI", "Security": "Robert Half", "Sector": "Industrials", "Sub-Industry": "Human Resource & Employment Services", "CIK": 315213}
+{"Symbol": "RJF", "Security": "Raymond James", "Sector": "Financials", "Sub-Industry": "Investment Banking & Brokerage", "CIK": 720005}
+{"Symbol": "RL", "Security": "Ralph Lauren Corporation", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel, Accessories & Luxury Goods", "CIK": 1037038}
+{"Symbol": "RMD", "Security": "ResMed", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 943819}
+{"Symbol": "ROK", "Security": "Rockwell Automation", "Sector": "Industrials", "Sub-Industry": "Electrical Components & Equipment", "CIK": 1024478}
+{"Symbol": "ROL", "Security": "Rollins, Inc.", "Sector": "Industrials", "Sub-Industry": "Environmental & Facilities Services", "CIK": 84839}
+{"Symbol": "ROP", "Security": "Roper Technologies", "Sector": "Information Technology", "Sub-Industry": "Electronic Equipment & Instruments", "CIK": 882835}
+{"Symbol": "ROST", "Security": "Ross Stores", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel Retail", "CIK": 745732}
+{"Symbol": "RSG", "Security": "Republic Services", "Sector": "Industrials", "Sub-Industry": "Environmental & Facilities Services", "CIK": 1060391}
+{"Symbol": "RTX", "Security": "RTX Corporation", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 101829}
+{"Symbol": "RVTY", "Security": "Revvity", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 31791}
+{"Symbol": "SBAC", "Security": "SBA Communications", "Sector": "Real Estate", "Sub-Industry": "Telecom Tower REITs", "CIK": 1034054}
+{"Symbol": "SBUX", "Security": "Starbucks", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 829224}
+{"Symbol": "SCHW", "Security": "Charles Schwab Corporation", "Sector": "Financials", "Sub-Industry": "Investment Banking & Brokerage", "CIK": 316709}
+{"Symbol": "SEDG", "Security": "SolarEdge", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 1419612}
+{"Symbol": "SEE", "Security": "Sealed Air", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 1012100}
+{"Symbol": "SHW", "Security": "Sherwin-Williams", "Sector": "Materials", "Sub-Industry": "Specialty Chemicals", "CIK": 89800}
+{"Symbol": "SJM", "Security": "J.M. Smucker Company (The)", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 91419}
+{"Symbol": "SLB", "Security": "Schlumberger", "Sector": "Energy", "Sub-Industry": "Oil & Gas Equipment & Services", "CIK": 87347}
+{"Symbol": "SNA", "Security": "Snap-on", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 91440}
+{"Symbol": "SNPS", "Security": "Synopsys", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 883241}
+{"Symbol": "SO", "Security": "Southern Company", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 92122}
+{"Symbol": "SPG", "Security": "Simon Property Group", "Sector": "Real Estate", "Sub-Industry": "Retail REITs", "CIK": 1063761}
+{"Symbol": "SPGI", "Security": "S&P Global", "Sector": "Financials", "Sub-Industry": "Financial Exchanges & Data", "CIK": 64040}
+{"Symbol": "SRE", "Security": "Sempra Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 1032208}
+{"Symbol": "STE", "Security": "Steris", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1757898}
+{"Symbol": "STLD", "Security": "Steel Dynamics", "Sector": "Materials", "Sub-Industry": "Steel", "CIK": 1022671}
+{"Symbol": "STT", "Security": "State Street Corporation", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 93751}
+{"Symbol": "STX", "Security": "Seagate Technology", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 1137789}
+{"Symbol": "STZ", "Security": "Constellation Brands", "Sector": "Consumer Staples", "Sub-Industry": "Distillers & Vintners", "CIK": 16918}
+{"Symbol": "SWK", "Security": "Stanley Black & Decker", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 93556}
+{"Symbol": "SWKS", "Security": "Skyworks Solutions", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 4127}
+{"Symbol": "SYF", "Security": "Synchrony Financial", "Sector": "Financials", "Sub-Industry": "Consumer Finance", "CIK": 1601712}
+{"Symbol": "SYK", "Security": "Stryker Corporation", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 310764}
+{"Symbol": "SYY", "Security": "Sysco", "Sector": "Consumer Staples", "Sub-Industry": "Food Distributors", "CIK": 96021}
+{"Symbol": "T", "Security": "AT&T", "Sector": "Communication Services", "Sub-Industry": "Integrated Telecommunication Services", "CIK": 732717}
+{"Symbol": "TAP", "Security": "Molson Coors Beverage Company", "Sector": "Consumer Staples", "Sub-Industry": "Brewers", "CIK": 24545}
+{"Symbol": "TDG", "Security": "TransDigm Group", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 1260221}
+{"Symbol": "TDY", "Security": "Teledyne Technologies", "Sector": "Information Technology", "Sub-Industry": "Electronic Equipment & Instruments", "CIK": 1094285}
+{"Symbol": "TECH", "Security": "Bio-Techne", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 842023}
+{"Symbol": "TEL", "Security": "TE Connectivity", "Sector": "Information Technology", "Sub-Industry": "Electronic Manufacturing Services", "CIK": 1385157}
+{"Symbol": "TER", "Security": "Teradyne", "Sector": "Information Technology", "Sub-Industry": "Semiconductor Materials & Equipment", "CIK": 97210}
+{"Symbol": "TFC", "Security": "Truist", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 92230}
+{"Symbol": "TFX", "Security": "Teleflex", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 96943}
+{"Symbol": "TGT", "Security": "Target Corporation", "Sector": "Consumer Staples", "Sub-Industry": "Consumer Staples Merchandise Retail", "CIK": 27419}
+{"Symbol": "TJX", "Security": "TJX Companies", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel Retail", "CIK": 109198}
+{"Symbol": "TMO", "Security": "Thermo Fisher Scientific", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 97745}
+{"Symbol": "TMUS", "Security": "T-Mobile US", "Sector": "Communication Services", "Sub-Industry": "Wireless Telecommunication Services", "CIK": 1283699}
+{"Symbol": "TPR", "Security": "Tapestry, Inc.", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel, Accessories & Luxury Goods", "CIK": 1116132}
+{"Symbol": "TRGP", "Security": "Targa Resources", "Sector": "Energy", "Sub-Industry": "Oil & Gas Storage & Transportation", "CIK": 1389170}
+{"Symbol": "TRMB", "Security": "Trimble Inc.", "Sector": "Information Technology", "Sub-Industry": "Electronic Equipment & Instruments", "CIK": 864749}
+{"Symbol": "TROW", "Security": "T. Rowe Price", "Sector": "Financials", "Sub-Industry": "Asset Management & Custody Banks", "CIK": 1113169}
+{"Symbol": "TRV", "Security": "Travelers Companies (The)", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 86312}
+{"Symbol": "TSCO", "Security": "Tractor Supply", "Sector": "Consumer Discretionary", "Sub-Industry": "Specialty Stores", "CIK": 916365}
+{"Symbol": "TSLA", "Security": "Tesla, Inc.", "Sector": "Consumer Discretionary", "Sub-Industry": "Automobile Manufacturers", "CIK": 1318605}
+{"Symbol": "TSN", "Security": "Tyson Foods", "Sector": "Consumer Staples", "Sub-Industry": "Packaged Foods & Meats", "CIK": 100493}
+{"Symbol": "TT", "Security": "Trane Technologies", "Sector": "Industrials", "Sub-Industry": "Building Products", "CIK": 1466258}
+{"Symbol": "TTWO", "Security": "Take-Two Interactive", "Sector": "Communication Services", "Sub-Industry": "Interactive Home Entertainment", "CIK": 946581}
+{"Symbol": "TXN", "Security": "Texas Instruments", "Sector": "Information Technology", "Sub-Industry": "Semiconductors", "CIK": 97476}
+{"Symbol": "TXT", "Security": "Textron", "Sector": "Industrials", "Sub-Industry": "Aerospace & Defense", "CIK": 217346}
+{"Symbol": "TYL", "Security": "Tyler Technologies", "Sector": "Information Technology", "Sub-Industry": "Application Software", "CIK": 860731}
+{"Symbol": "UAL", "Security": "United Airlines Holdings", "Sector": "Industrials", "Sub-Industry": "Passenger Airlines", "CIK": 100517}
+{"Symbol": "UDR", "Security": "UDR, Inc.", "Sector": "Real Estate", "Sub-Industry": "Multi-Family Residential REITs", "CIK": 74208}
+{"Symbol": "UHS", "Security": "Universal Health Services", "Sector": "Health Care", "Sub-Industry": "Health Care Facilities", "CIK": 352915}
+{"Symbol": "ULTA", "Security": "Ulta Beauty", "Sector": "Consumer Discretionary", "Sub-Industry": "Specialty Stores", "CIK": 1403568}
+{"Symbol": "UNH", "Security": "UnitedHealth Group", "Sector": "Health Care", "Sub-Industry": "Managed Health Care", "CIK": 731766}
+{"Symbol": "UNP", "Security": "Union Pacific Corporation", "Sector": "Industrials", "Sub-Industry": "Rail Transportation", "CIK": 100885}
+{"Symbol": "UPS", "Security": "United Parcel Service", "Sector": "Industrials", "Sub-Industry": "Air Freight & Logistics", "CIK": 1090727}
+{"Symbol": "URI", "Security": "United Rentals", "Sector": "Industrials", "Sub-Industry": "Trading Companies & Distributors", "CIK": 1067701}
+{"Symbol": "USB", "Security": "U.S. Bank", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 36104}
+{"Symbol": "V", "Security": "Visa Inc.", "Sector": "Financials", "Sub-Industry": "Transaction & Payment Processing Services", "CIK": 1403161}
+{"Symbol": "VFC", "Security": "VF Corporation", "Sector": "Consumer Discretionary", "Sub-Industry": "Apparel, Accessories & Luxury Goods", "CIK": 103379}
+{"Symbol": "VICI", "Security": "Vici Properties", "Sector": "Real Estate", "Sub-Industry": "Hotel & Resort REITs", "CIK": 1705696}
+{"Symbol": "VLO", "Security": "Valero Energy", "Sector": "Energy", "Sub-Industry": "Oil & Gas Refining & Marketing", "CIK": 1035002}
+{"Symbol": "VLTO", "Security": "Veralto", "Sector": "Industrials", "Sub-Industry": "Environmental & Facilities Services", "CIK": 1967680}
+{"Symbol": "VMC", "Security": "Vulcan Materials Company", "Sector": "Materials", "Sub-Industry": "Construction Materials", "CIK": 1396009}
+{"Symbol": "VRSK", "Security": "Verisk", "Sector": "Industrials", "Sub-Industry": "Research & Consulting Services", "CIK": 1442145}
+{"Symbol": "VRSN", "Security": "Verisign", "Sector": "Information Technology", "Sub-Industry": "Internet Services & Infrastructure", "CIK": 1014473}
+{"Symbol": "VRTX", "Security": "Vertex Pharmaceuticals", "Sector": "Health Care", "Sub-Industry": "Biotechnology", "CIK": 875320}
+{"Symbol": "VTR", "Security": "Ventas", "Sector": "Real Estate", "Sub-Industry": "Health Care REITs", "CIK": 740260}
+{"Symbol": "VTRS", "Security": "Viatris", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 1792044}
+{"Symbol": "VZ", "Security": "Verizon", "Sector": "Communication Services", "Sub-Industry": "Integrated Telecommunication Services", "CIK": 732712}
+{"Symbol": "WAB", "Security": "Wabtec", "Sector": "Industrials", "Sub-Industry": "Construction Machinery & Heavy Transportation Equipment", "CIK": 943452}
+{"Symbol": "WAT", "Security": "Waters Corporation", "Sector": "Health Care", "Sub-Industry": "Life Sciences Tools & Services", "CIK": 1000697}
+{"Symbol": "WBA", "Security": "Walgreens Boots Alliance", "Sector": "Consumer Staples", "Sub-Industry": "Drug Retail", "CIK": 1618921}
+{"Symbol": "WBD", "Security": "Warner Bros. Discovery", "Sector": "Communication Services", "Sub-Industry": "Broadcasting", "CIK": 1437107}
+{"Symbol": "WDC", "Security": "Western Digital", "Sector": "Information Technology", "Sub-Industry": "Technology Hardware, Storage & Peripherals", "CIK": 106040}
+{"Symbol": "WEC", "Security": "WEC Energy Group", "Sector": "Utilities", "Sub-Industry": "Electric Utilities", "CIK": 783325}
+{"Symbol": "WELL", "Security": "Welltower", "Sector": "Real Estate", "Sub-Industry": "Health Care REITs", "CIK": 766704}
+{"Symbol": "WFC", "Security": "Wells Fargo", "Sector": "Financials", "Sub-Industry": "Diversified Banks", "CIK": 72971}
+{"Symbol": "WHR", "Security": "Whirlpool Corporation", "Sector": "Consumer Discretionary", "Sub-Industry": "Household Appliances", "CIK": 106640}
+{"Symbol": "WM", "Security": "Waste Management", "Sector": "Industrials", "Sub-Industry": "Environmental & Facilities Services", "CIK": 823768}
+{"Symbol": "WMB", "Security": "Williams Companies", "Sector": "Energy", "Sub-Industry": "Oil & Gas Storage & Transportation", "CIK": 107263}
+{"Symbol": "WMT", "Security": "Walmart", "Sector": "Consumer Staples", "Sub-Industry": "Consumer Staples Merchandise Retail", "CIK": 104169}
+{"Symbol": "WRB", "Security": "Berkley", "Sector": "Financials", "Sub-Industry": "Property & Casualty Insurance", "CIK": 11544}
+{"Symbol": "WRK", "Security": "WestRock", "Sector": "Materials", "Sub-Industry": "Paper & Plastic Packaging Products & Materials", "CIK": 1732845}
+{"Symbol": "WST", "Security": "West Pharmaceutical Services", "Sector": "Health Care", "Sub-Industry": "Health Care Supplies", "CIK": 105770}
+{"Symbol": "WTW", "Security": "Willis Towers Watson", "Sector": "Financials", "Sub-Industry": "Insurance Brokers", "CIK": 1140536}
+{"Symbol": "WY", "Security": "Weyerhaeuser", "Sector": "Real Estate", "Sub-Industry": "Timber REITs", "CIK": 106535}
+{"Symbol": "WYNN", "Security": "Wynn Resorts", "Sector": "Consumer Discretionary", "Sub-Industry": "Casinos & Gaming", "CIK": 1174922}
+{"Symbol": "XEL", "Security": "Xcel Energy", "Sector": "Utilities", "Sub-Industry": "Multi-Utilities", "CIK": 72903}
+{"Symbol": "XOM", "Security": "ExxonMobil", "Sector": "Energy", "Sub-Industry": "Integrated Oil & Gas", "CIK": 34088}
+{"Symbol": "XRAY", "Security": "Dentsply Sirona", "Sector": "Health Care", "Sub-Industry": "Health Care Supplies", "CIK": 818479}
+{"Symbol": "XYL", "Security": "Xylem Inc.", "Sector": "Industrials", "Sub-Industry": "Industrial Machinery & Supplies & Components", "CIK": 1524472}
+{"Symbol": "YUM", "Security": "Yum! Brands", "Sector": "Consumer Discretionary", "Sub-Industry": "Restaurants", "CIK": 1041061}
+{"Symbol": "ZBH", "Security": "Zimmer Biomet", "Sector": "Health Care", "Sub-Industry": "Health Care Equipment", "CIK": 1136869}
+{"Symbol": "ZBRA", "Security": "Zebra Technologies", "Sector": "Information Technology", "Sub-Industry": "Electronic Equipment & Instruments", "CIK": 877212}
+{"Symbol": "ZION", "Security": "Zions Bancorporation", "Sector": "Financials", "Sub-Industry": "Regional Banks", "CIK": 109380}
+{"Symbol": "ZTS", "Security": "Zoetis", "Sector": "Health Care", "Sub-Industry": "Pharmaceuticals", "CIK": 1555280}
