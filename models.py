@@ -61,11 +61,30 @@ class DenseDocumentRetriever:
         truncated_query = self.q_tokenizer.decode(tokens['input_ids'][0], skip_special_tokens=True)
         return truncated_query
 
-    def search_documents(self, query):
+    # def search_documents(self, query):
+    #     ''' return the top k documents given the query '''
+    #     truncated_query = self.truncate_query(query)
+    #     hits = self.searcher.search(truncated_query, k=self.k)
+    #     return hits
+    
+    def search_documents(self, query, filter_function=None):
         ''' return the top k documents given the query '''
         truncated_query = self.truncate_query(query)
-        hits = self.searcher.search(truncated_query, k=self.k)
-        return hits
+        filtered_hits = []
+        m = 2
+
+        while len(filtered_hits) < self.k:
+            hits = self.searcher.search(truncated_query, k=self.k*m)
+            if filter_function:
+                hits = filter_function(hits)
+            else:
+                hits = hits[:self.k]
+            
+            filtered_hits = hits
+
+            m += 1
+
+        return filtered_hits[:self.k]
 
     def extract_titles_and_texts(self, hits):
         ''' Extract and return titles and texts from the top k hits '''
