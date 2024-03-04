@@ -2,6 +2,7 @@ import os
 import json
 import fnmatch
 import argparse
+from functools import partial
 from pyserini.search.lucene import LuceneSearcher
 from pyserini.search.faiss import FaissSearcher
 from models import DenseDocumentRetriever, SparseDocumentRetriever, output_hits
@@ -19,7 +20,8 @@ parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
 parser.add_argument("--k", type=int, default=10)
 parser.add_argument("--target_paragraph", type=str, default=None) # para5
-parser.add_argument("--filter_name", type=str, default=None)
+parser.add_argument("--filter_name", type=str, default=None, help="Filter name for the index")
+parser.add_argument("--post_filter", action='store_true', default=False, help="Indicates whether to conduct post filtering")
 parser.add_argument("--output_jsonl_results", action='store_true', default=False) # ouput the retrieval results to view the retrieved paragraphs
 
 args = parser.parse_args()
@@ -112,6 +114,9 @@ def get_retriever(model_type, index_type, k, filter_name=None):
 
     if model_type == "sparse":
         searcher = LuceneSearcher(f"{INDEX_DIR}/{index_name}")
+        # TODO: check if NER is supported
+        if index_type == "ner":
+            return SparseDocumentRetriever(searcher, k=k, fields={"ORG": 0.4, "contents": 0.6})
         return SparseDocumentRetriever(searcher, k=k)
 
     elif model_type == "dense":
@@ -150,6 +155,28 @@ def output_hits(hits, output_file):
             f.write('\n')
 
 
+def filter_function(hits, cik, item, start_year, end_year, filter_out=True):
+    filtered_hits = []
+    for hit in hits:
+        docid = hit.docid
+        docid_componenets = docid.split('_')
+        doc_year = int(docid_componenets[0][:4])
+        doc_cik = docid_componenets[2]
+        doc_item = docid_componenets[4]
+
+        # Check criteria
+        match_cik = str(cik) == doc_cik if cik else True
+        match_year = (int(start_year) <= doc_year <= (int(end_year))) if start_year and end_year else True
+        match_item = str(item) == doc_item if item else True
+
+        match_criteria = match_cik and match_year and match_item
+
+        if match_criteria and not filter_out:   # write the hits that match the criteria if `filter_out` is not set (standard filtering)
+            filtered_hits.append(hit)
+        elif not match_criteria and filter_out: # write the hits that do not match the criteria if `filter_out` is set (exclude the lines that match the criteria)
+            filtered_hits.append(hit)
+    return filtered_hits
+
 def main():
     model_type = args.model
     index_type = args.index_type
@@ -177,23 +204,28 @@ def main():
     else:
         search_pattern = f"*_{target_item}_para*" # "20220426_10-Q_789019_part1_item2_para492"
     
+    if args.post_filter:
+        partial_filter_function = partial(filter_function, cik=cik, item=target_item, start_year=target_year, end_year=target_year, filter_out=True)
     
     base_target_file_dir = os.path.dirname(FORMMATED_DIR)
     preprocessed_target_file_dir = os.path.join(base_target_file_dir, index_type)
     print("preprocessed_target_file_dir:", preprocessed_target_file_dir)
     # with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
-    with open(os.path.join(preprocessed_target_file_dir, target_file_name), "r") as open_file:
+    with open(os.path.join(preprocessed_target_file_dir, target_file_name), "r") as open_file: # let the target paragraph be the same format as the index
         for line in open_file:
             data = json.loads(line)
             if fnmatch.fnmatch(data["id"], search_pattern):
                 print(f"start searching for {data['id']}")
                 
                 target_title = convert_docid_to_title(data["id"]) # retrieve時沒有concat title
-                target_paragraph = data["contents"]
+                target_paragraph_content = data["contents"]
                 
-                full_query = f"{instruction}; {target_paragraph}"
+                full_query = f"{instruction}; {target_paragraph_content}"
                 # print(full_query)
-                hits = retriever.search_documents(full_query)
+                if args.post_filter:
+                    hits = retriever.search_documents(full_query, filter_function=partial_filter_function)
+                else:
+                    hits = retriever.search_documents(full_query)
 
                 index_name = get_index_name(model_type, index_type, filter_name)
                 # index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
