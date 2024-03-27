@@ -120,7 +120,7 @@ def get_10K_file_name(cik, year):
     for file_name in os.listdir(FORMMATED_DIR):
         if fnmatch.fnmatch(file_name, search_pattern):
             return file_name
-    print("File not found.")
+    print(f"File not found. cik: {cik}, year: {year}")
     return None
 
 def get_file_name(cik, form, year, month):
