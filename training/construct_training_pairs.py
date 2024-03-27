@@ -132,7 +132,7 @@ def main():
     print("Start constructing positive pairs with sample size:", args.sample_size)
     construct_positive_pairs(sample_para_ids, args.start_year, args.sample_year)
     
-    print("Start constructing positive pairs with sample size:", args.sample_size)
+    print("Start constructing negative pairs with sample size:", args.sample_size)
     construct_negative_pairs(sample_para_ids, args.start_year, args.sample_year)
 
 if __name__ == "__main__":
