@@ -1,3 +1,4 @@
+import sys
 import json
 import os
 import argparse
@@ -87,11 +88,11 @@ def convert_docid_to_title(docid):
 
     return new_title
 
-def convert_data(first_line, data, format_type):
+def convert_data(first_line, data, format_type, max_length=None):
     # Regular expression pattern to match ids ending with "_fin_stats_para" followed by numbers
-    pattern = r'_finstats_para\d+$'
-    if re.search(pattern, data["id"]):
-        return None
+    # pattern = r'_finstats_para\d+$'
+    # if re.search(pattern, data["id"]):
+    #     return None
 
     if data["id"].endswith("statements") or data["id"].endswith("sheets"):
         return None
@@ -101,13 +102,14 @@ def convert_data(first_line, data, format_type):
         "contents": " ".join(data["paragraph"])
     }
 
-    # filter paragraphs
-    # tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    # num_tokens = len(tokenizer.tokenize(base_data["contents"]))
-    # num_tokens = len(base_data["contents"].split(" "))
-    # if num_tokens <= 10:
-    #     return None
-    
+    if max_length:
+        tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+        tokens = tokenizer.tokenize(base_data["contents"])
+        if len(tokens) > max_length:
+            # Truncate the tokens and convert back to string
+            truncated_tokens = tokens[:max_length]
+            base_data["contents"] = tokenizer.convert_tokens_to_string(truncated_tokens)
+
     if format_type == "multi_fields":
         base_data.update({
             "cik": first_line["cik"],
@@ -122,6 +124,9 @@ def convert_data(first_line, data, format_type):
     elif format_type == "meta_data":
         meta_data = f"cik: {first_line['cik']}, company_name: {first_line['company_name']}, filing_date: {first_line['filing_date']}, form: {first_line['form']}"
         base_data["contents"] = meta_data + "; " + base_data["contents"]
+
+    elif format_type == "company_name":
+        base_data["contents"] = first_line["company_name"] + "; " + base_data["contents"]
 
     elif format_type == "title":
         title = convert_docid_to_title(data["id"])
@@ -173,10 +178,10 @@ def convert_data(first_line, data, format_type):
 
     return base_data
 
-def convert_jsonl_format(file_path, format_type):
+def convert_jsonl_format(file_path, format_type, max_length=None):
     converted_data = []
     for first_line, data in read_jsonl_file(file_path):
-        converted = convert_data(first_line, data, format_type)
+        converted = convert_data(first_line, data, format_type, max_length=None)
         if converted:
             converted_data.append(converted)
     return converted_data
@@ -187,20 +192,24 @@ def save_data_to_jsonl(data, file_path):
             json.dump(line, file)
             file.write("\n")
 
-def main(format_type, start_index, end_index):
-    dest_dir = os.path.join(DEST_DIR, format_type)
+def main(format_type, start_index, end_index, max_length):
+    if max_length:
+        dest_dir = os.path.join(DEST_DIR, f"{format_type}_{max_length}")
+    else:
+        dest_dir = os.path.join(DEST_DIR, format_type)
+    
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
     file_paths = visit_jsonl_files_under_dir(SOURCE_DIR)
     total_files = len(file_paths)
     print(f"Converting {total_files} files to {format_type} format")
-    print(f"Start index: {start_index}, End index: {end_index}")
+    print(f"Start index: {start_index}, End index: {min(end_index, total_files)}")
     
     # for idx, file_path in enumerate(file_paths):
     for idx in range(start_index, min(end_index, total_files)):
         file_path = file_paths[idx]
-        converted_data = convert_jsonl_format(file_path, format_type)
+        converted_data = convert_jsonl_format(file_path, format_type, max_length)
         file_name = Path(file_path).name
         save_data_to_jsonl(converted_data, os.path.join(dest_dir, file_name))
 
@@ -213,11 +222,12 @@ def main(format_type, start_index, end_index):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert JSONL data to desired format")
-    parser.add_argument("format_type", choices=["basic", "multi_fields", "meta_data", "title", "ner", "ner_concat"], help="Choose the format type to convert the JSONL data")
-    parser.add_argument("start_index", type=int, help="The starting index of files to process")
-    parser.add_argument("end_index", type=int, help="The ending index of files to process")
+    parser.add_argument("--format_type", choices=["basic", "multi_fields", "meta_data", "title", "ner", "ner_concat", "company_name"], help="Choose the format type to convert the JSONL data")
+    parser.add_argument("--start_index", type=int, default=0, help="The starting index of files to process")  # for parallel processing
+    parser.add_argument("--end_index", type=int, default=sys.maxsize, help="The ending index of files to process")  # for parallel processing
+    parser.add_argument("--max_length", type=int, default=None, help="To truncate the length of the contents")
     args = parser.parse_args()
 
-    main(args.format_type, args.start_index, args.end_index)
+    main(args.format_type, args.start_index, args.end_index, args.max_length)
 
 
