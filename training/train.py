@@ -66,7 +66,7 @@ def main():
         evaluation_steps=evaluation_steps
     )
 
-    model.save(f"{args.output_path}/{args.model_name}")
+    model.save(f"{args.output_path}")
 
 if __name__ == "__main__":
     main()
