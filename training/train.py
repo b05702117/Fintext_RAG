@@ -6,6 +6,7 @@ import json
 import argparse
 import os
 import random
+import logging
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="all-mpnet-base-v2-tfidf")
@@ -49,6 +50,9 @@ def main():
     # set CUDA device
     os.environ["CUDA_VISIBLE_DEVICES"] = args.device
 
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', 
+                        datefmt='%Y-%m-%d %H:%M:%S', filename='training_log.log', filemode='w')
+
     model = SentenceTransformer("all-mpnet-base-v2")
 
     train_examples, validation_examples = load_input_examples()
@@ -56,6 +60,8 @@ def main():
     train_loss = losses.CosineSimilarityLoss(model)
     evaluator = evaluation.EmbeddingSimilarityEvaluator.from_input_examples(validation_examples)
     evaluation_steps = len(train_examples) // args.batch_size
+
+    logging.info("Starting the training process")
 
     model.fit(
         train_objectives=[(train_dataloader, train_loss)], 
