@@ -36,10 +36,14 @@ def load_documents(data_path):
     return documents
 
 def encode_documents(model, documents, output_file, batch_size=16):
+    total_docs = len(documents)
+    progress_checkpoint = 10 # set the progress interval to 10%
+
+    print("Encoding documents...")
     with open(output_file, "w") as f:
         for start_idx in range(0, len(documents), batch_size):
             batch = documents[start_idx: start_idx + batch_size]
-            encoded_vectors = model.encode([doc["contents"] for doc in batch], show_progress_bar=True)
+            encoded_vectors = model.encode([doc["contents"] for doc in batch])
 
             # combine the id, contents, and encoded vector for each document
             for doc, vec in zip(batch, encoded_vectors):
@@ -50,9 +54,17 @@ def encode_documents(model, documents, output_file, batch_size=16):
                 }
                 json.dump(embedding, f)
                 f.write("\n")
-    
-def main():
+            
+            # progress update 
+            processed_docs = min(start_idx + batch_size, total_docs)
+            progress = (processed_docs / total_docs) * 100
 
+            # Print the progress at intervals of 10%
+            if progress >= progress_checkpoint:
+                print(f"Progress: {progress:.2f}% out of {total_docs} documents processed")
+                progress_checkpoint += 10
+
+def main():
     device = f"cuda:{args.device}" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
