@@ -4,9 +4,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--form", type=str, required=True, choices=["10K", "10Q"])
-# parser.add_argument("--encoder", type=str, required=True, choices=["dpr-ctx_encoder-multiset-base"])
-# parser.add_argument("--format_type", type=str, required=True, choices=["basic", "meta_data", "title"]) # basic, meta_data, title
-parser.add_argument("--source_dir_name", type=str, required=True) # the folder name of the source embeddings, e.g. "dpr-ctx_encoder-multiset-base-title"
+parser.add_argument("--source_dir_name", type=str, required=True, help="the folder name of the source embeddings, (e.g., 'dpr-ctx_encoder-multiset-base-title')")
 parser.add_argument("--emb_file_name", type=str, default="embeddings")
 parser.add_argument("--cik", type=str)
 parser.add_argument("--start_year", type=int)
@@ -42,7 +40,6 @@ def filter_embeddings(args, source_file, output_file):
                 outputfile.write(line)
 
 def generate_output_file(args):
-    # output_file = f"../embeddings/{args.form}/{args.encoder}-{args.format_type}"
     output_file = f"../embeddings/{args.form}/{args.source_dir_name}"
 
     if args.filter_out:
@@ -60,7 +57,6 @@ def generate_output_file(args):
     return output_file
 
 if __name__ == "__main__":
-    # source_file = f"../embeddings/{args.form}/{args.encoder}-{args.format_type}/{args.emb_file_name}.jsonl"
     source_file = f"../embeddings/{args.form}/{args.source_dir_name}/{args.emb_file_name}.jsonl"
     output_file = generate_output_file(args)
 
