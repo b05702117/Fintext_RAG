@@ -14,6 +14,11 @@ if [ $FILTER_NAME != "null" ]; then
     index_dir=${index_dir}-${FILTER_NAME}
 fi
 
+# Check if the directory exists, if not, create it
+if [ ! -d "$index_dir" ]; then
+    mkdir -p $index_dir
+fi
+
 python -m pyserini.index.faiss \
     --input ${source_dir} \
     --output ${index_dir}
