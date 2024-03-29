@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, required=True, choices=["dense", "sparse"])
 parser.add_argument("--d_encoder", type=str, required=False, help="Document encoder model name") # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
 parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
-parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title", "ner", "ner_concat"])
+parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title", "ner", "ner_concat", "company_name"])
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
 parser.add_argument("--target_item", type=str, required=True)
@@ -41,7 +41,8 @@ dense_index_mapping = {
     "basic": "basic",
     "meta_data": "meta_data",
     "title": "title", 
-    "ner_concat": "ner_concat"
+    "ner_concat": "ner_concat", 
+    "company_name": "company_name"
 }
 
 with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
@@ -205,13 +206,13 @@ def main():
         search_pattern = f"*_{target_item}_para*" # "20220426_10-Q_789019_part1_item2_para492"
     
     if args.post_filter:
-        partial_filter_function = partial(filter_function, cik=cik, item=target_item, start_year=target_year, end_year=target_year, filter_out=True)
+        partial_filter_function = partial(filter_function, cik=cik, item=target_item, start_year=target_year, end_year=target_year, filter_out=True) # filter out the cik's target_item in target_year
     
     base_target_file_dir = os.path.dirname(FORMMATED_DIR)
     preprocessed_target_file_dir = os.path.join(base_target_file_dir, index_type)
     print("preprocessed_target_file_dir:", preprocessed_target_file_dir)
-    # with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
-    with open(os.path.join(preprocessed_target_file_dir, target_file_name), "r") as open_file: # let the target paragraph be the same format as the index
+    with open(os.path.join(FORMMATED_DIR, target_file_name), "r") as open_file:
+    # with open(os.path.join(preprocessed_target_file_dir, target_file_name), "r") as open_file: # let the target paragraph be the same format as the index
         for line in open_file:
             data = json.loads(line)
             if fnmatch.fnmatch(data["id"], search_pattern):
@@ -220,7 +221,9 @@ def main():
                 target_title = convert_docid_to_title(data["id"]) # retrieve時沒有concat title
                 target_paragraph_content = data["contents"]
                 
-                full_query = f"{instruction}; {target_paragraph_content}"
+                # full_query = f"{instruction}; {target_paragraph_content}" # without title
+                full_query = f"{target_title}; {target_paragraph_content}" # with only title
+                # full_query = f"{target_company}; {target_paragraph_content}" # with company name
                 # print(full_query)
                 if args.post_filter:
                     hits = retriever.search_documents(full_query, filter_function=partial_filter_function)
