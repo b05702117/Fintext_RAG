@@ -6,10 +6,12 @@ import json
 import argparse
 import os
 import random
+import logging
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="all-mpnet-base-v2-tfidf")
 parser.add_argument("--output_path", type=str, default="model/")
+# TODO: 要加個output file name 跟get index name 對接
 # parser.add_argument("--checkpoint_path", type=str, default="model/")
 parser.add_argument("--epochs", type=int, default=1)
 parser.add_argument("--batch_size", type=int, default=16)
@@ -49,6 +51,9 @@ def main():
     # set CUDA device
     os.environ["CUDA_VISIBLE_DEVICES"] = args.device
 
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', 
+                        datefmt='%Y-%m-%d %H:%M:%S', filename='training_log.log', filemode='w')
+
     model = SentenceTransformer("all-mpnet-base-v2")
 
     train_examples, validation_examples = load_input_examples()
@@ -57,16 +62,19 @@ def main():
     evaluator = evaluation.EmbeddingSimilarityEvaluator.from_input_examples(validation_examples)
     evaluation_steps = len(train_examples) // args.batch_size
 
+    logging.info("Starting the training process")
+
     model.fit(
         train_objectives=[(train_dataloader, train_loss)], 
         epochs=args.epochs,
         warmup_steps=100,
-        output_path=args.output_path, 
+        output_path=os.path.join(args.output_path, args.model_name), 
         evaluator=evaluator,
         evaluation_steps=evaluation_steps
     )
 
-    model.save(f"{args.output_path}")
+    model.save(os.path.join(args.output_path, args.model_name))
+    # model.save(f"{args.output_path}/{args.model_name}")
 
 if __name__ == "__main__":
     main()

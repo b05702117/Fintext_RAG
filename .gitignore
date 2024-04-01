@@ -10,6 +10,7 @@ Archive/*
 downloads/*
 highlighting_results/*
 embeddings/*
+training/model/*
 
 cnc_highlighting/*
 DPR/*

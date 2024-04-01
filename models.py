@@ -3,13 +3,38 @@ import os
 import json
 import torch
 from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
-from pyserini.search.faiss import FaissSearcher, DprQueryEncoder
 from transformers import DPRReader, DPRReaderTokenizer, DPRQuestionEncoderTokenizer
 from transformers import AutoTokenizer
 from pyserini.search.lucene import LuceneSearcher
+from pyserini.search.faiss import FaissSearcher
+from pyserini.search.faiss import QueryEncoder
 from cnc_highlighting.encode import BertForHighlightPrediction
+from sentence_transformers import SentenceTransformer
+import faiss
 
 K = 50 # top k documents to retrieve
+
+class CustomSentenceTransformerEncoder(QueryEncoder):
+    def __init__(self, model_path: str, encoded_query_dir: str = None, device: str = 'cpu'):
+        super().__init__(encoded_query_dir)
+
+        if model_path:
+            self.model = SentenceTransformer(model_path)
+            self.tokenizer = self.model.tokenizer
+            self.device = device
+            self.model.to(self.device)
+            self.has_model = True
+        else:
+            if not self.has_encoded_query:
+                raise ValueError('Either model_path or encoded_query_dir must be provided.')
+    
+    def encode(self, query: str):
+        if self.has_model:
+            embeddings = self.model.encode(query, convert_to_tensor=True)
+            return embeddings
+        else:
+            return super().encode(query)
+        
 
 class QAPipeline:
     ''' TODO '''
@@ -20,7 +45,7 @@ class QAPipeline:
     def answer_question(self, query):
         titles, texts = self.retriever.retrieve_and_process_documents(query)
         return self.reader.find_answer(query, titles, texts)
-    
+
 
 class HighlightPipeline:
     ''' TODO '''
