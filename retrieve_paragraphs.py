@@ -5,7 +5,9 @@ import argparse
 from functools import partial
 from pyserini.search.lucene import LuceneSearcher
 from pyserini.search.faiss import FaissSearcher
+from sentence_transformers import SentenceTransformer
 from models import DenseDocumentRetriever, SparseDocumentRetriever, output_hits
+from models import CustomSentenceTransformerEncoder
 from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
 from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_from_docid
 
@@ -13,7 +15,11 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--model", type=str, required=True, choices=["dense", "sparse"])
 parser.add_argument("--d_encoder", type=str, required=False, help="Document encoder model name") # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
-parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
+# parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-MiniLM-L6-v2
+parser.add_argument("--q_encoder", type=str, required=False, 
+                    help="Query encoder model name or path. "
+                         "Can be a Hugging Face model name (e.g., 'sentence-transformers/all-MiniLM-L6-v2') "
+                         "or a local path to a fine-tuned model directory.")
 parser.add_argument("--index_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title", "ner", "ner_concat", "company_name"])
 parser.add_argument("--cik", type=str, required=True)
 parser.add_argument("--target_year", type=str, required=True)
@@ -85,6 +91,7 @@ def convert_docid_to_title(docid):
 
 
 def get_index_name(model_type, index_type, filter_name=None):
+    # TODO: training要改檔名
     if model_type not in model_mapping:
         raise ValueError(f"Unknown model type: {model_type}")
     
@@ -121,10 +128,15 @@ def get_retriever(model_type, index_type, k, filter_name=None):
         return SparseDocumentRetriever(searcher, k=k)
 
     elif model_type == "dense":
-        # query_encoder = DprQueryEncoder("facebook/dpr-question_encoder-multiset-base")
-        # searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder)
-        print(f"Query encoder: {args.q_encoder}")
-        searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", args.q_encoder)
+        if os.path.isdir(args.q_encoder):
+            print(f"load the fine-tuned SentenceTransformer model from {args.q_encoder}")
+            query_encoder = CustomSentenceTransformerEncoder(args.q_encoder)
+            searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", query_encoder) # change INDEX_DIR to the path of the fine-tuned model
+            # searcher = FaissSearcher(f"/tmp2/ybtu/Fintext_RAG/indexes/10K/{index_name}", query_encoder)
+        else:
+            print(f"load the pre-trained query encoder from huggingface model hub: {args.q_encoder}")
+            searcher = FaissSearcher(f"{INDEX_DIR}/{index_name}", args.q_encoder)
+        
         return DenseDocumentRetriever(searcher, k=k)
 
 
@@ -231,7 +243,6 @@ def main():
                     hits = retriever.search_documents(full_query)
 
                 index_name = get_index_name(model_type, index_type, filter_name)
-                # index_type_with_filter = f"{index_type}-{filter_name}" if filter_name is not None else index_type
 
                 output_file_trec = os.path.join('retrieval_results_trec', f"{cik}_{target_year}", index_name, data["id"] + '.txt')
                 output_hits_trec(hits, data["id"], output_file_trec, index_name)
