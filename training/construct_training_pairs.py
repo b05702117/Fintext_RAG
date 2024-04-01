@@ -14,7 +14,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-random.seed(0)
+from transformers import BertTokenizer
+
+random.seed(52)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--sample_size", type=int, default=2000)
@@ -59,12 +61,16 @@ def sample_paragraph_ids(year, item, sample_size=2000):
     search_pattern = f"{year}"
     para_id_pattern = f"*_{item}_*"
 
+    tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     for file_name in os.listdir(FORMMATED_DIR):
         if file_name.startswith(search_pattern):
             with open(os.path.join(FORMMATED_DIR, file_name), "r") as f:
                 for line in f:
                     data = json.loads(line)
                     if fnmatch.fnmatch(data["id"], para_id_pattern):
+                        tokens = tokenizer.tokenize(data["contents"])
+                        if len(tokens) <= 15 or len(tokens) >= 250:
+                            continue
                         sample_para_id.append(data["id"])
     
     print("Number of paragraphs:", len(sample_para_id))
@@ -129,11 +135,11 @@ def construct_negative_pairs(sample_para_ids, start_year, end_year, negative_num
 def main():
     sample_para_ids = sample_paragraph_ids(args.sample_year, args.sample_item, args.sample_size)
     
-    print("Start constructing positive pairs with sample size:", args.sample_size)
-    construct_positive_pairs(sample_para_ids, args.start_year, args.sample_year)
+    print(f"Start constructing positive pairs with sample size: {args.sample_size}, positive number: {args.positive_number}")
+    construct_positive_pairs(sample_para_ids, args.start_year, args.sample_year, args.positive_number)
     
-    print("Start constructing negative pairs with sample size:", args.sample_size)
-    construct_negative_pairs(sample_para_ids, args.start_year, args.sample_year)
+    print(f"Start constructing negative pairs with sample size: {args.sample_size}, negative number: {args.negative_number}")
+    construct_negative_pairs(sample_para_ids, args.start_year, args.sample_year, args.negative_number)
 
 if __name__ == "__main__":
     main()
