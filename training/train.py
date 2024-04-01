@@ -11,6 +11,7 @@ import logging
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="all-mpnet-base-v2-tfidf")
 parser.add_argument("--output_path", type=str, default="model/")
+# TODO: 要加個output file name 跟get index name 對接
 # parser.add_argument("--checkpoint_path", type=str, default="model/")
 parser.add_argument("--epochs", type=int, default=1)
 parser.add_argument("--batch_size", type=int, default=16)
@@ -67,12 +68,13 @@ def main():
         train_objectives=[(train_dataloader, train_loss)], 
         epochs=args.epochs,
         warmup_steps=100,
-        output_path=args.output_path, 
+        output_path=os.path.join(args.output_path, args.model_name), 
         evaluator=evaluator,
         evaluation_steps=evaluation_steps
     )
 
-    model.save(f"{args.output_path}")
+    model.save(os.path.join(args.output_path, args.model_name))
+    # model.save(f"{args.output_path}/{args.model_name}")
 
 if __name__ == "__main__":
     main()
