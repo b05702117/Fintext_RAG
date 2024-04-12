@@ -4,7 +4,9 @@ import shutil
 import subprocess
 import fnmatch
 import re
+import csv
 from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
+from config import CIK_TO_COMPANY, ITEM_MAPPING, CIK_TO_SECTOR
 
 def aggregate_and_index_all_prior(cik, form, start_year, end_year):
     # Define the index name and path
@@ -132,23 +134,24 @@ def get_file_name(cik, form, year, month):
     print("File not found.")
     return None
 
-def retrieve_paragraph_from_raw_jsonl(file_name, part_key, item_key, paragraph_number):
-    search_pattern = f"*_{part_key}_{item_key}_para{paragraph_number}"
+# def retrieve_paragraph_from_raw_jsonl(file_name, part_key, item_key, paragraph_number):
+#     '''only for 10-Q files'''
+#     search_pattern = f"*_{part_key}_{item_key}_para{paragraph_number}"
 
-    with open(os.path.join(RAW_DIR, file_name), "r") as open_file:
-        next(open_file) # skip the first line
+#     with open(os.path.join(RAW_DIR, file_name), "r") as open_file:
+#         next(open_file) # skip the first line
 
-        for line in open_file:
-            data = json.loads(line)
+#         for line in open_file:
+#             data = json.loads(line)
 
-            if not re.search(r'para\d+$', data.get("id", "")):
-                continue
+#             if not re.search(r'para\d+$', data.get("id", "")):
+#                 continue
             
-            if fnmatch.fnmatch(data["id"], search_pattern):
-                return data["paragraph"]
+#             if fnmatch.fnmatch(data["id"], search_pattern):
+#                 return data["paragraph"]
             
-    print("Paragraph not found.")
-    return None
+#     print("Paragraph not found.")
+#     return None
 
 def retrieve_paragraph_from_fromatted_jsonl(file_name, part_key, item_key, paragraph_number):
     search_pattern = f"*_{part_key}_{item_key}_para{paragraph_number}"
@@ -177,11 +180,11 @@ def retrieve_paragraph_from_docid(docid):
 def convert_docid_to_title(docid):
     ''' TODO: wait for the mapping of part_key and item_key from YT'''
 
-    with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
-        cik_to_company = json.load(f)
+    # with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
+    #     cik_to_company = json.load(f)
     
-    with open(os.path.join(ROOT, 'collections', 'item_mapping.json'), 'r') as f:
-        item_mapping = json.load(f)
+    # with open(os.path.join(ROOT, 'collections', 'item_mapping.json'), 'r') as f:
+    #     item_mapping = json.load(f)
 
     # 20220125_10-Q_789019_part1_item2_para475
     components = docid.split('_')
@@ -204,12 +207,48 @@ def convert_docid_to_title(docid):
     quarter = (month - 1) // 3 + 1
 
     # Get the company name from CIK
-    company_name = cik_to_company.get(cik, "Unknown Company")
+    company_name = CIK_TO_COMPANY.get(cik, "Unknown Company")
+
+    # Get the sector from CIK
+    sector = CIK_TO_SECTOR.get(cik, "Unknown Sector")
 
     # Get the item name from item number
-    item_name = item_mapping.get(item, "Unknown Item")
+    item_name = ITEM_MAPPING.get(item, "Unknown Item")
 
     # Formant the new title
-    new_title = f"{company_name} {year} Q{quarter} {form} {item_name}"
+    new_title = f"{company_name} - {sector} {year} Q{quarter} {form} {item_name}"
 
     return new_title
+
+def parse_trec_file(file):
+    '''
+        Parse a TREC file and return the results as a dictionary.
+        keys: target_paragraph_id
+        values: {retrieval_type: [doc_id1, doc_id2, ...]}
+    '''
+    results = {}
+    with open(file, 'r') as f:
+        for line in f:
+            parts = line.strip().split()
+            query_id, _, doc_id, rank, score, retrieval_type = parts
+            if query_id not in results:
+                results[query_id] = {}
+            if retrieval_type not in results[query_id]:
+                results[query_id][retrieval_type] = []
+            results[query_id][retrieval_type].append((doc_id, int(rank)))  # Store doc_id and rank as a tuple
+    # Sort the doc_id based on rank in ascending order
+    for query_id in results:
+        for retrieval_type in results[query_id]:
+            results[query_id][retrieval_type].sort(key=lambda x: x[1])
+            results[query_id][retrieval_type] = [doc_id for doc_id, _ in results[query_id][retrieval_type]]
+    return results
+
+def trec_file_to_csv(trec_file, output_csv_file):
+    '''Convert a TREC file to a CSV file.'''
+    with open(trec_file, 'r') as f, open(output_csv_file, 'w') as csv_file:
+        csv_writer = csv.writer(csv_file)
+        csv_writer.writerow(["target_id", "Q0", "reference_id", "rank", "score", "tag"])
+
+        for line in f:
+            target_id, _, reference_id, rank, score, tag = line.strip().split(" ")
+            csv_writer.writerow([target_id, _, reference_id, rank, score, tag])
