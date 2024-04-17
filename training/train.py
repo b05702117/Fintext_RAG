@@ -9,7 +9,7 @@ import random
 import logging
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model_name", type=str, default="all-mpnet-base-v2-tfidf")
+parser.add_argument("--model_name", type=str, default="all-mpnet-base-v2")
 parser.add_argument("--output_path", type=str, default="model/")
 # TODO: 要加個output file name 跟get index name 對接
 # parser.add_argument("--checkpoint_path", type=str, default="model/")
@@ -73,8 +73,7 @@ def main():
         evaluation_steps=evaluation_steps
     )
 
-    model.save(os.path.join(args.output_path, args.model_name))
-    # model.save(f"{args.output_path}/{args.model_name}")
+    model.save(os.path.join(args.output_path, f"{args.model_name}_e{args.epochs}_b{args.batch_size}"))
 
 if __name__ == "__main__":
     main()

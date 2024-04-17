@@ -132,6 +132,10 @@ def construct_negative_pairs(sample_para_ids, start_year, end_year, negative_num
                 pair = {'target': target_para, 'reference': ref_contents[index]}
                 f.write(json.dumps(pair) + "\n")
 
+def construct_hard_negative_pairs():
+    # top BM25 results from other company's 10-K
+    pass
+
 def main():
     sample_para_ids = sample_paragraph_ids(args.sample_year, args.sample_item, args.sample_size)
     
