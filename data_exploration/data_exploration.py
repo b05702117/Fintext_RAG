@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+base_dir = Path(__file__).resolve().parent.parent
+sys.path.append(str(base_dir))
+
 import json
 import os
 import matplotlib.pyplot as plt
@@ -6,8 +11,8 @@ import utils # utils.py
 from transformers import BertTokenizer
 import matplotlib.pyplot as plt
 
-directory = "/tmp2/ybtu/FinNLP/collections/basic"
-# directory = FORMMATED_DIR
+# directory = "/tmp2/ybtu/FinNLP/collections/basic"
+directory = FORMMATED_DIR
 
 # Count the total number of .jsonl files
 total_files = sum(1 for f in os.listdir(directory) if f.endswith(".jsonl"))
