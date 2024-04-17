@@ -252,3 +252,10 @@ def trec_file_to_csv(trec_file, output_csv_file):
         for line in f:
             target_id, _, reference_id, rank, score, tag = line.strip().split(" ")
             csv_writer.writerow([target_id, _, reference_id, rank, score, tag])
+
+def docid_to_cik(docid):
+    # '20211029_10-K_320193_part2_item7_para6'
+    return docid.split("_")[2]
+
+def cik_to_sector(cik):
+    return CIK_TO_SECTOR.get(str(cik), "Unknown Sector")
