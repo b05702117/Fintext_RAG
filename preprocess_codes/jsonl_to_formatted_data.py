@@ -176,14 +176,6 @@ def convert_data(first_line, data, format_type, nlp=None, max_length=None):
         # Concatenate the parts to form the complete text
         base_data["contents"] = "".join(modified_contents)
 
-        # # Prepend title to the contents
-        # title = convert_docid_to_title(data["id"])
-        # if title:
-        #     base_data["contents"] = title + "; " + base_data["contents"]
-        # else:
-        #     meta_data = f"cik: {first_line['cik']}, company_name: {first_line['company_name']}, filing_date: {first_line['filing_date']}, form: {first_line['form']}"
-        #     base_data["contents"] = meta_data + "; " + base_data["contents"]
-
     elif format_type == "llm_ner":
         # Concatenate NER tags to the data
         # nlp = assemble("config.cfg")

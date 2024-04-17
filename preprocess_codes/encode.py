@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--model_path", type=str, default="/tmp2/ybtu/Fintext_RAG/training/model")
 parser.add_argument("--data_root_path", type=str, default="/home/ybtu/FinNLP/collections/10K")
-parser.add_argument("--data_format_type", type=str, required=True, choices=["multi_fields", "sparse_title", "basic", "meta_data", "title", "ner", "ner_concat"])
+parser.add_argument("--data_format_type", type=str, required=True, choices=["basic", "company_name", "title", "ner_concat"])
 parser.add_argument("--output_root_path", type=str, default="../embeddings/10K")
 parser.add_argument("--output_file_name", type=str, default="embeddings.jsonl")
 parser.add_argument("--device", type=str, default="0")
