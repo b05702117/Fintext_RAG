@@ -51,13 +51,15 @@ def get_index_name(index_type, filter_name=None):
     
     return index_name
 
-def get_retriever(index_type, k=10, filter_name=None):
+def get_retriever(index_type, k1, b, k=10, filter_name=None):
     index_name = get_index_name(index_type, filter_name)
     index_path = os.path.join(INDEX_DIR, index_name)
     print(f"Using index: {index_name}")
     print(f"Index path: {index_path}")
-
+    
     searcher = LuceneSearcher(index_path)
+    searcher.set_bm25(k1=k1, b=b)
+
     fields = fields_mapping.get(index_type, None) 
     if fields:
         print(f"Using fields for: {index_type}")
@@ -122,12 +124,12 @@ def main():
     parser.add_argument("--target_paragraph", type=str, default=None)
     parser.add_argument("--filter_name", type=str, default=None, help="Filter name for the index")
     parser.add_argument("--post_filter", action='store_true', default=False, help="Indicates whether to conduct post filtering")
-    parser.add_argument("--k1", type=float, default=1.2, help="BM25 k1 parameter")
-    parser.add_argument("--b", type=float, default=0.75, help="BM25 b parameter")
+    parser.add_argument("--k1", type=float, default=0.9, help="BM25 k1 parameter")
+    parser.add_argument("--b", type=float, default=0.4, help="BM25 b parameter")
 
     args = parser.parse_args()
 
-    retriever = get_retriever(args.index_type, args.k, args.filter_name)
+    retriever = get_retriever(args.index_type, args.k1, args.b, args.k, args.filter_name)
 
     target_file_name = get_10K_file_name(args.cik, args.target_year)
 
