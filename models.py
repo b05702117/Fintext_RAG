@@ -85,12 +85,6 @@ class DenseDocumentRetriever:
         tokens = self.q_tokenizer(query, return_tensors='pt', truncation=True, max_length=max_length)
         truncated_query = self.q_tokenizer.decode(tokens['input_ids'][0], skip_special_tokens=True)
         return truncated_query
-
-    # def search_documents(self, query):
-    #     ''' return the top k documents given the query '''
-    #     truncated_query = self.truncate_query(query)
-    #     hits = self.searcher.search(truncated_query, k=self.k)
-    #     return hits
     
     def search_documents(self, query, filter_function=None):
         ''' return the top k documents given the query '''
@@ -125,20 +119,39 @@ class DenseDocumentRetriever:
 
 
 class SparseDocumentRetriever:
-    def __init__(self, searcher, fields: dict() = {'company_name': 0.6, 'contents': 0.4}, docs_dir=FORMMATED_DIR, k=K):
+    def __init__(self, searcher, fields=None, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
-        self.fields = fields # the weight of each field; exchange 'company_name' with 'name' for 10Q
+        self.fields = fields 
         self.docs_dir = docs_dir
         self.k = k
     
-    def search_documents(self, query):
+    def search_documents(self, query, filter_function=None):
         ''' return the top k documents given the query '''
-        hits = self.searcher.search(
-            q=query,
-            fields=self.fields,
-            k=self.k
-        )
-        return hits
+        filtered_hits = []
+        m = 2
+
+        while len(filtered_hits) < self.k:
+            if self.fields:
+                hits = self.searcher.search(
+                    q=query,
+                    fields=self.fields,
+                    k=self.k * m
+                )
+            else:
+                hits = self.searcher.search(
+                    q=query,
+                    k=self.k * m
+                )
+            if filter_function:
+                hits = filter_function(hits)
+            else:
+                hits = hits[:self.k]
+            
+            filtered_hits = hits
+
+            m += 1
+
+        return filtered_hits[:self.k]
 
     def extract_titles_and_texts(self, hits):
         ''' Extract and return titles and texts from the top k hits '''
@@ -158,6 +171,41 @@ class SparseDocumentRetriever:
         titles, texts = self.extract_titles_and_texts(hits)
         return titles, texts
 
+
+class HybridDocumentRetriever:
+    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K, alpha=0.1, weight_on_dense=False):
+        self.searcher = searcher
+        self.docs_dir = docs_dir
+        self.k = k
+        self.alpha = alpha
+        self.weight_on_dense = weight_on_dense
+    
+    def search_documents(self, query, filter_function=None):
+        filtered_hits = []
+        m = 2
+
+        while len(filtered_hits) < self.k:
+            hits = self.searcher.search(
+                query, 
+                k0=self.k * m, 
+                k=self.k * m, 
+                weight_on_dense=self.weight_on_dense, 
+                alpha=self.alpha
+            )
+            # print(f"original hits: {len(hits)}")
+
+            if filter_function:
+                hits = filter_function(hits)
+                # print("filtered hits:", len(hits))
+            else:
+                hits = hits[:self.k]
+            
+            filtered_hits = hits
+
+            m += 1
+            # print(f"{len(filtered_hits)} hits found.")
+        
+        return filtered_hits[:self.k]
 
 class DprHighlighter:
     ''' 
