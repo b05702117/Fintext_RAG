@@ -12,6 +12,18 @@ highlighting_results/*
 embeddings/*
 training/model/*
 
+BM25_tuning/retrieval_results/*
+BM25_tuning/retrieval_results_trec/*
+BM25_tuning/*.csv
+
+dense_tuning/retrieval_results/*
+dense_tuning/retrieval_results_trec/*
+dense_tuning/*.csv
+
+eval/*
+llm_ner/*
+training/*.jsonl
+
 cnc_highlighting/*
 DPR/*
 
