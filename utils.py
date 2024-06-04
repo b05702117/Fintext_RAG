@@ -178,14 +178,6 @@ def retrieve_paragraph_from_docid(docid):
     return None
 
 def convert_docid_to_title(docid):
-    ''' TODO: wait for the mapping of part_key and item_key from YT'''
-
-    # with open(os.path.join(ROOT, 'collections', 'cik_to_company.json'), 'r') as f:
-    #     cik_to_company = json.load(f)
-    
-    # with open(os.path.join(ROOT, 'collections', 'item_mapping.json'), 'r') as f:
-    #     item_mapping = json.load(f)
-
     # 20220125_10-Q_789019_part1_item2_para475
     components = docid.split('_')
     
