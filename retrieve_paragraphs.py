@@ -5,8 +5,7 @@ import argparse
 from functools import partial
 from pyserini.search.lucene import LuceneSearcher
 from pyserini.search.faiss import FaissSearcher
-from pyserini.search.hybrid import HybridSearcher
-from sentence_transformers import SentenceTransformer
+from models import CustomHybridSearcher # CustomHybridSearcher inherits from HybridSearcher and overrides the search method to include the fields parameter.
 from models import DenseDocumentRetriever, SparseDocumentRetriever, HybridDocumentRetriever, output_hits
 from models import CustomSentenceTransformerEncoder
 from config import FORMMATED_DIR, INDEX_DIR, CIK_TO_COMPANY
@@ -72,7 +71,7 @@ dense_index_mapping = {
 def get_index_name(retriever_type, index_type, filter_name=None):
     # TODO: training要改檔名
     if retriever_type not in retriever_mapping:
-        raise ValueError(f"Unknown model type: {retriever_type}")
+        raise ValueError(f"Unknown retriever_type type: {retriever_type}")
     
     if retriever_type == "sparse":
         if index_type not in sparse_index_mapping:
@@ -134,11 +133,11 @@ def get_retriever(retriever_type, index_type, k, filter_name=None):
 
     elif retriever_type == "hybrid":
         # suppose the index type is for dense retriever
-        sparse_index_name = get_index_name("sparse", args.sparse_index_type, args.sparse_filter_name)
-        s_searcher = create_searcher("sparse", os.path.join(INDEX_DIR, sparse_index_name)) # TODO: 沒給到fields
+        sparse_index_name = get_index_name("sparse", args.sparse_index_type, args.sparse_filter_name if args.sparse_filter_name else filter_name)
+        s_searcher = create_searcher("sparse", os.path.join(INDEX_DIR, sparse_index_name))
         d_searcher = create_searcher("dense", index_path, args.q_encoder)
-        h_searcher = HybridSearcher(s_searcher, d_searcher)
-        return HybridDocumentRetriever(h_searcher, k=k, alpha=args.alpha, weight_on_dense=args.weight_on_dense)
+        h_searcher = CustomHybridSearcher(d_searcher, s_searcher) # TODO: modify the HybridSearcher to accept the fields for sparse searcher
+        return HybridDocumentRetriever(h_searcher, k=k, alpha=args.alpha, weight_on_dense=args.weight_on_dense, fields=fields_mapping.get(args.sparse_index_type, None))
 
 def output_hits_trec(hits, target_id, output_file, index_name):
     # {query_id} Q0 {doc_id} {rank} {score} {index_name}
@@ -234,8 +233,8 @@ def main():
 
                 index_name = get_index_name(args.retriever_type, args.index_type, args.filter_name)
                 if args.retriever_type == "hybrid":
-                    s_index_name = get_index_name("sparse", args.sparse_index_type, args.sparse_filter_name)
-                    retrieval_system_tag = f"hybrid-{args.sparse_index_type}-{args.sparse_filter_name}-{index_name}"
+                    s_index_name = get_index_name("sparse", args.sparse_index_type, args.sparse_filter_name if args.sparse_filter_name else args.filter_name)
+                    retrieval_system_tag = f"hybrid-{s_index_name}-{index_name}"
                     if args.weight_on_dense:
                         retrieval_system_tag += "-weight_on_dense"
                 else:

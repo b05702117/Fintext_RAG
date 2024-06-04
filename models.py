@@ -2,17 +2,39 @@ import utils # utils.py
 import os
 import json
 import torch
-from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
+from typing import List, Dict
+from pyserini.search.faiss import FaissSearcher, DenseSearchResult
+from config import FORMMATED_DIR
 from transformers import DPRReader, DPRReaderTokenizer, DPRQuestionEncoderTokenizer
-from transformers import AutoTokenizer
-from pyserini.search.lucene import LuceneSearcher
-from pyserini.search.faiss import FaissSearcher
 from pyserini.search.faiss import QueryEncoder
+from pyserini.search.hybrid import HybridSearcher
 from cnc_highlighting.encode import BertForHighlightPrediction
 from sentence_transformers import SentenceTransformer
-import faiss
 
-K = 50 # top k documents to retrieve
+K = 10 # top k documents to retrieve
+
+class CustomHybridSearcher(HybridSearcher):
+    '''
+    CustomHybridSearcher inherits from HybridSearcher and overrides the search method to include the fields parameter.
+    '''
+    def __init__(self, dense_searcher, sparse_searcher):
+        super().__init__(dense_searcher, sparse_searcher)
+
+    def search(self, query: str, k0: int = 10, k: int = 10, alpha: float = 0.1, normalization: bool = False, weight_on_dense: bool = False, fields: dict = None) -> List[DenseSearchResult]:
+        dense_hits = self.dense_searcher.search(query, k0)
+        sparse_hits = self.sparse_searcher.search(query, k0, fields=fields)
+        return self._hybrid_results(dense_hits, sparse_hits, alpha, k, normalization, weight_on_dense)
+    
+    def batch_search(self, queries: List[str], q_ids: List[str], k0: int = 10, k: int = 10, threads: int = 1,
+            alpha: float = 0.1, normalization: bool = False, weight_on_dense: bool = False, fields: dict = None) \
+            -> Dict[str, List[DenseSearchResult]]:
+        dense_result = self.dense_searcher.batch_search(queries, q_ids, k0, threads)
+        sparse_result = self.sparse_searcher.batch_search(queries, q_ids, k0, threads, fields=fields)
+        hybrid_result = {
+            key: self._hybrid_results(dense_result[key], sparse_result[key], alpha, k, normalization, weight_on_dense)
+            for key in dense_result
+        }
+        return hybrid_result
 
 class CustomSentenceTransformerEncoder(QueryEncoder):
     def __init__(self, model_path: str, encoded_query_dir: str = None, device: str = 'cpu'):
@@ -35,176 +57,84 @@ class CustomSentenceTransformerEncoder(QueryEncoder):
         else:
             return super().encode(query)
         
-
-class QAPipeline:
-    ''' TODO '''
-    def __init__(self, retriever, reader):
-        self.retriever = retriever
-        self.reader = reader
-    
-    def answer_question(self, query):
-        titles, texts = self.retriever.retrieve_and_process_documents(query)
-        return self.reader.find_answer(query, titles, texts)
-
-
-class HighlightPipeline:
-    ''' TODO '''
-    def __init__(self, retriever, highlighter):
-        self.retriever = retriever
-        self.highlighter = highlighter
-
-    def highlight_span(self, target):
-        titles, texts = self.retriever.retrieve_and_process_documents(target)
-        pass
-
-    @staticmethod
-    def filter_retrived_documents():
-        pass
-
-
-class DenseDocumentRetriever: 
+class BaseRetriever:
+    ''' Base class for document retrievers '''
     def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K):
         self.searcher = searcher
         self.docs_dir = docs_dir
         self.k = k
+    
+    def search_documents(self, query, filter_function=None):
+        m = 2
+        filtered_hits = []
+        while len(filtered_hits) < self.k:
+            hits = self.searcher.search(query, k=self.k*m)
+            if filter_function:
+                hits = filter_function(hits)
+            else:
+                hits = hits[:self.k]
+            filtered_hits = hits
+            m += 1
+        return filtered_hits[:self.k]
+
+class SparseDocumentRetriever(BaseRetriever):
+    def __init__(self, searcher, fields=None, docs_dir=FORMMATED_DIR, k=K):
+        super().__init__(searcher, docs_dir, k)
+        self.fields = fields
+    
+    def search_documents(self, query, filter_function=None):
+        m = 2
+        filtered_hits = []
+        while len(filtered_hits) < self.k:
+            hits = self.searcher.search(query, k=self.k*m, fields=self.fields)
+            if filter_function:
+                hits = filter_function(hits)
+            else:
+                hits = hits[:self.k]
+            filtered_hits = hits
+            m += 1
+        return filtered_hits[:self.k]
+
+class DenseDocumentRetriever(BaseRetriever):
+    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K):
+        super().__init__(searcher, docs_dir, k)
         self.q_tokenizer = searcher.query_encoder.tokenizer
     
-    def get_document_content(self, docid):
-        ''' return the paragraph content given the docid from raw jsonl files '''
-        file_name = docid.split('_')[0] + '_' + docid.split('_')[1] + '_' + docid.split('_')[2] + '.jsonl'
-        with open(os.path.join(self.docs_dir, file_name), "r") as open_file:
-            for line in open_file:
-                data = json.loads(line)
-                if data["id"] == docid:
-                    return data["contents"]
-        print("Paragraph not found.")
-        return None
-
     def truncate_query(self, query, max_length=512):
         ''' truncate the query to the maximum length '''
         tokens = self.q_tokenizer(query, return_tensors='pt', truncation=True, max_length=max_length)
         truncated_query = self.q_tokenizer.decode(tokens['input_ids'][0], skip_special_tokens=True)
         return truncated_query
-    
+
     def search_documents(self, query, filter_function=None):
-        ''' return the top k documents given the query '''
         truncated_query = self.truncate_query(query)
-        filtered_hits = []
-        m = 2
+        return super().search_documents(truncated_query, filter_function)
 
-        while len(filtered_hits) < self.k:
-            hits = self.searcher.search(truncated_query, k=self.k*m)
-            if filter_function:
-                hits = filter_function(hits)
-            else:
-                hits = hits[:self.k]
-            
-            filtered_hits = hits
-
-            m += 1
-
-        return filtered_hits[:self.k]
-
-    def extract_titles_and_texts(self, hits):
-        ''' Extract and return titles and texts from the top k hits '''
-        ids = [hits[i].docid for i in range(len(hits))]
-        texts = [self.get_document_content(hits[i].docid) for i in range(len(hits))]
-        return ids, texts
-    
-    def retrieve_and_process_documents(self, query):
-        ''' Retrieve the top k documents and prepare their data reader processing '''
-        hits = self.search_documents(query)
-        titles, texts = self.extract_titles_and_texts(hits)
-        return titles, texts
-
-
-class SparseDocumentRetriever:
-    def __init__(self, searcher, fields=None, docs_dir=FORMMATED_DIR, k=K):
-        self.searcher = searcher
-        self.fields = fields 
-        self.docs_dir = docs_dir
-        self.k = k
-    
-    def search_documents(self, query, filter_function=None):
-        ''' return the top k documents given the query '''
-        filtered_hits = []
-        m = 2
-
-        while len(filtered_hits) < self.k:
-            if self.fields:
-                hits = self.searcher.search(
-                    q=query,
-                    fields=self.fields,
-                    k=self.k * m
-                )
-            else:
-                hits = self.searcher.search(
-                    q=query,
-                    k=self.k * m
-                )
-            if filter_function:
-                hits = filter_function(hits)
-            else:
-                hits = hits[:self.k]
-            
-            filtered_hits = hits
-
-            m += 1
-
-        return filtered_hits[:self.k]
-
-    def extract_titles_and_texts(self, hits):
-        ''' Extract and return titles and texts from the top k hits '''
-        ids, texts = [], []
-        for i in range(len(hits)):
-            parsed_json = json.loads(hits[i].raw)
-            id = parsed_json['id']
-            content = parsed_json['contents']
-            ids.append(id)
-            texts.append(content)
-
-        return ids, texts
-
-    def retrieve_and_process_documents(self, query):
-        ''' Retrieve the top k documents and prepare their data for reader processing '''
-        hits = self.search_documents(query)
-        titles, texts = self.extract_titles_and_texts(hits)
-        return titles, texts
-
-
-class HybridDocumentRetriever:
-    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K, alpha=0.1, weight_on_dense=False):
-        self.searcher = searcher
-        self.docs_dir = docs_dir
-        self.k = k
+class HybridDocumentRetriever(BaseRetriever):
+    def __init__(self, searcher, docs_dir=FORMMATED_DIR, k=K, alpha=0.1, weight_on_dense=False, fields=None):
+        super().__init__(searcher, docs_dir, k)
         self.alpha = alpha
         self.weight_on_dense = weight_on_dense
+        self.fields = fields
     
     def search_documents(self, query, filter_function=None):
-        filtered_hits = []
         m = 2
-
+        filtered_hits = []
         while len(filtered_hits) < self.k:
             hits = self.searcher.search(
                 query, 
-                k0=self.k * m, 
-                k=self.k * m, 
+                k0=self.k*m, 
+                k=self.k*m, 
                 weight_on_dense=self.weight_on_dense, 
-                alpha=self.alpha
+                alpha=self.alpha, 
+                fields=self.fields
             )
-            # print(f"original hits: {len(hits)}")
-
             if filter_function:
                 hits = filter_function(hits)
-                # print("filtered hits:", len(hits))
             else:
                 hits = hits[:self.k]
-            
             filtered_hits = hits
-
             m += 1
-            # print(f"{len(filtered_hits)} hits found.")
-        
         return filtered_hits[:self.k]
 
 class DprHighlighter:
@@ -372,7 +302,6 @@ class CncBertHighlighter:
             # print(f"reference {i+1}:")
             # print(top_k_words)
 
-
 class DprReader:
     ''' https://huggingface.co/facebook/dpr-reader-multiset-base '''
     def __init__(self, model_name: str, tokenizer_name: str = None, device: str = 'cpu'):
@@ -427,6 +356,29 @@ class DprReader:
             print(f"{relevance_probs[i]:.4f} reference {ref_ids[i]}:")
             print(f"start_idx: {start_idx}, end_idx: {end_idx}, span: {highlighted_span}")
 
+class QAPipeline:
+    ''' TODO '''
+    def __init__(self, retriever, reader):
+        self.retriever = retriever
+        self.reader = reader
+    
+    def answer_question(self, query):
+        titles, texts = self.retriever.retrieve_and_process_documents(query)
+        return self.reader.find_answer(query, titles, texts)
+
+class HighlightPipeline:
+    ''' TODO '''
+    def __init__(self, retriever, highlighter):
+        self.retriever = retriever
+        self.highlighter = highlighter
+
+    def highlight_span(self, target):
+        titles, texts = self.retriever.retrieve_and_process_documents(target)
+        pass
+
+    @staticmethod
+    def filter_retrived_documents():
+        pass
 
 def generate_statistics_summary(titles):
     # Count the number of documents retrieved
