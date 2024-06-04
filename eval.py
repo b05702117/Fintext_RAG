@@ -5,6 +5,16 @@ import argparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer, util
+
+import nltk
+nltk.download('punkt')
+from nltk.translate.bleu_score import sentence_bleu
+from nltk.translate.bleu_score import SmoothingFunction
+from nltk.tokenize import word_tokenize
+
+from bert_score import BERTScorer
+scorer = BERTScorer(lang="en", rescale_with_baseline=True, model_type="microsoft/deberta-xlarge-mnli")
+
 from utils import get_10K_file_name, convert_docid_to_title, retrieve_paragraph_from_docid
 
 def cosine_similarity_tfidf(para1: str, para2: str) -> float:
@@ -29,6 +39,16 @@ def semantic_similarity_bert(para1: str, para2: str, model):
     cosine_scores = util.cos_sim(emb_1, emb_2)
 
     return cosine_scores.item()
+
+def calculate_bleu_score(ref, cand):
+    smoothie = SmoothingFunction().method4
+    ref_tokens = word_tokenize(ref)
+    cand_tokens = word_tokenize(cand)
+    return sentence_bleu([ref_tokens], cand_tokens, smoothing_function=smoothie)
+
+def calculate_bert_score(ref, cand):
+    P, R, F1 = scorer.score([cand], [ref])
+    return P, R, F1
 
 def parse_trec_file(file):
     results = {}
@@ -63,7 +83,7 @@ def main():
 
     with open(f"eval/{output_file_name}.txt", 'w') as f, open(f"eval/{output_file_name}.csv", "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['Retrieval System', 'Rank', 'ref_para_id', 'Cosine Similarity', 'Jaccard Similarity', 'Semantic Similarity'])
+        csv_writer.writerow(['Retrieval System', 'Rank', 'ref_para_id', 'Cosine Similarity', 'Jaccard Similarity', 'Semantic Similarity', 'bleu_score', 'bert_precision', 'bert_recall', 'bert_f1'])
         
         for target_id in target_ids:
             target_paragraph = retrieve_paragraph_from_docid(target_id)
@@ -80,13 +100,21 @@ def main():
                     cos_sim_tfidf = cosine_similarity_tfidf(target_paragraph, ref_paragraph)
                     jaccard_sim = jaccard_similarity(target_paragraph, ref_paragraph)
                     semantic_sim = semantic_similarity_bert(target_paragraph, ref_paragraph, model)
+                    bleu_score = calculate_bleu_score(target_paragraph, ref_paragraph)
+                    bert_precision, bert_recall, bert_f1 = calculate_bert_score(target_paragraph, ref_paragraph)
+                    bert_precision, bert_recall, bert_f1 = bert_precision.item(), bert_recall.item(), bert_f1.item()
 
                     f.write(f"Ref ID: {ref_para_id}\n")
                     f.write(f"Rank: {rank}\n")
                     f.write(f"Retrieval System: {retrieval_system}\n")
                     f.write(f"Cosine Similarity (TF-IDF): {cos_sim_tfidf:.4f}\n")
                     f.write(f"Jaccard Similarity: {jaccard_sim:.4f}\n")
-                    f.write(f"Semantic Similarity (BERT): {semantic_sim:.4f}\n\n")
+                    f.write(f"Semantic Similarity (BERT): {semantic_sim:.4f}\n")
+                    f.write(f"BLEU Score: {bleu_score:.4f}\n")
+                    f.write(f"BERT Score: ")
+                    f.write(f"  P: {bert_precision:.4f}\n")
+                    f.write(f"  R: {bert_recall:.4f}\n")
+                    f.write(f"  F1: {bert_f1:.4f}\n\n")
 
                     print(f"Ref ID: {ref_para_id}")
                     print(f"Rank: {rank}")
@@ -94,9 +122,13 @@ def main():
                     print(f"Cosine Similarity (TF-IDF): {cos_sim_tfidf:.4f}")
                     print(f"Jaccard Similarity: {jaccard_sim:.4f}")
                     print(f"Semantic Similarity (BERT): {semantic_sim:.4f}")
-                    print()
+                    print(f"BLEU Score: {bleu_score:.4f}")
+                    print(f"BERT Score: ")
+                    print(f"  P: {bert_precision:.4f}")
+                    print(f"  R: {bert_recall:.4f}")
+                    print(f"  F1: {bert_f1:.4f}\n")
 
-                    csv_writer.writerow([retrieval_system, rank, ref_para_id, f"{cos_sim_tfidf:.4f}", f"{jaccard_sim:.4f}", f"{semantic_sim:.4f}"])
+                    csv_writer.writerow([retrieval_system, rank, ref_para_id, f"{cos_sim_tfidf:.4f}", f"{jaccard_sim:.4f}", f"{semantic_sim:.4f}", f"{bleu_score:.4f}", f"{bert_precision:.4f}", f"{bert_recall:.4f}", f"{bert_f1:.4f}"])
 
 if __name__ == '__main__':
     main()
