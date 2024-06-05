@@ -1,16 +1,17 @@
 #!/bin/bash
 
-model=$1
+retriever_type=$1
 index_type=$2
-d_encoder=${3:-""}
-q_encoder=${4:-""}
+prepend_info=$3
+d_encoder=${4:-"sentence-transformers/all-mpnet-base-v2"}
+q_encoder=${5:-"sentence-transformers/all-mpnet-base-v2"}
 filter_name="year2018_2022"
 target_year="2022"
 target_item="item7"
 k=10
 post_filter=true
 output_jsonl_results=true
-hybrid_sparse_filter=false # filter cik using sparse retrieval
+sparse_filter_name=false # filter cik in hybrid sparse filter
 
 declare -A cik_paragraphs
 cik_paragraphs["320193"]="para7"
@@ -25,7 +26,8 @@ for cik in "${!cik_paragraphs[@]}"; do
 
     # filter_name_cik=$filter_name-cik$cik
 
-    cmd="python3 retrieve_paragraphs.py --model $model --index_type $index_type --cik $cik --target_year $target_year\
+    cmd="python3 retrieve_paragraphs.py --retriever_type $retriever_type --index_type $index_type --prepend_info $prepend_info\
+        --cik $cik --target_year $target_year\
         --target_item $target_item --k $k --target_paragraph $paragraph \
         --filter_name $filter_name"
     
@@ -43,9 +45,7 @@ for cik in "${!cik_paragraphs[@]}"; do
     fi
 
     if [ "$hybrid_sparse_filter" = true ]; then
-        cmd="$cmd --hybrid_sparse_filter $filter_name-cik$cik"
-    else
-        cmd="$cmd --hybrid_sparse_filter $filter_name"
+        cmd="$cmd --sparse_filter_name $filter_name-cik$cik"
     fi
 
     # Execute the command
