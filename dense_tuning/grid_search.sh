@@ -1,7 +1,7 @@
 #!/bin/bash
 
 d_encoder=$1 # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
-q_encoder=$2
+q_encoder=$2 # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
 index_type=$3
 prepend_info=$4
 filter_name="year2018_2022"

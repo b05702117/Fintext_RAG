@@ -9,17 +9,32 @@ import fnmatch
 import argparse
 from functools import partial
 
+from pyserini.search.lucene import LuceneSearcher
 from pyserini.search.faiss import FaissSearcher
+from pyserini.search.hybrid import HybridSearcher
 from sentence_transformers import SentenceTransformer
 
 from config import ROOT, FORMMATED_DIR, INDEX_DIR
 from config import CIK_TO_COMPANY, CIK_TO_SECTOR, ITEM_MAPPING
 from utils import get_10K_file_name, retrieve_paragraph_from_docid, convert_docid_to_title
-from models import DenseDocumentRetriever, CustomSentenceTransformerEncoder
+from models import HybridDocumentRetriever, CustomSentenceTransformerEncoder
 
 print(f"FORMMATED_DIR: {FORMMATED_DIR}")
 print(f"INDEX_DIR: {INDEX_DIR}")
 print(f"Current working directory: {os.getcwd()}")
+
+sparse_index_mapping = {
+    "multi_fields": "multi_fields",
+    "ner": "ner", 
+    "company_name": "company_name", 
+    "title": "title", 
+    "basic": "basic"
+}
+
+fields_mapping = {
+    "multi_fields": {"company_name": 0.4, "sector": 0.2, "contents": 0.4},
+    "ner": {"ORG": 0.4, "contents": 0.6}
+}
 
 dense_index_mapping = {
     "basic": "basic",
@@ -29,37 +44,6 @@ dense_index_mapping = {
     "ner_concat_with_company_name": "ner_concat_with_company_name", 
     "ner_concat_with_title": "ner_concat_with_title"
 }
-
-def get_index_name(index_type, d_encoder, filter_name=None):
-    if index_type not in dense_index_mapping:
-        raise ValueError(f"Invalid index: {index_type} for dense retriever")
-    
-    encoder_name = d_encoder.split("/")[-1]
-    index_name = f"{encoder_name}-{dense_index_mapping[index_type]}"
-
-    if filter_name:
-        index_name = f"{index_name}-{filter_name}"
-    
-    return index_name
-
-
-def get_retriever(index_type, d_encoder, q_encoder, k=10, filter_name=None):   
-    index_name = get_index_name(index_type, d_encoder, filter_name)
-    index_path = os.path.join(INDEX_DIR, index_name)
-    print(f"Using index: {index_name}")
-    print(f"Index path: {index_path}")
-
-    # create seracher
-    searcher = None
-    if os.path.isdir(q_encoder):
-        print(f"load the fine-tuned SentenceTransformer model from {q_encoder}")
-        query_encoder = CustomSentenceTransformerEncoder(q_encoder)
-        searcher = FaissSearcher(index_path, query_encoder)
-    else:
-        print(f"load the pre-trained query encoder from huggingface model hub: {q_encoder}")
-        searcher = FaissSearcher(index_path, q_encoder)
-
-    return DenseDocumentRetriever(searcher, k=k)
 
 def filter_function(hits, cik, item, start_year, end_year, filter_out=True):
     filtered_hits = []
@@ -83,14 +67,65 @@ def filter_function(hits, cik, item, start_year, end_year, filter_out=True):
             filtered_hits.append(hit)
     return filtered_hits
 
-def output_hits_trec(hits, target_id, output_file, retrieval_system_tag):
-    # {query_id} Q0 {doc_id} {rank} {score} {retrieval_system_tag}
+def get_sparse_index_name(index_type, filter_name=None):
+    if index_type not in sparse_index_mapping:
+        raise ValueError(f"Invalid index: {index_type} for sparse retriever")
+    index_name = sparse_index_mapping[index_type]
+
+    if filter_name:
+        index_name = f"{index_name}-{filter_name}"
+    
+    return index_name
+
+def get_dense_index_name(index_type, d_encoder, filter_name=None):
+    if index_type not in dense_index_mapping:
+        raise ValueError(f"Invalid index: {index_type} for dense retriever")
+    
+    encoder_name = d_encoder.split("/")[-1]
+    index_name = f"{encoder_name}-{dense_index_mapping[index_type]}"
+
+    if filter_name:
+        index_name = f"{index_name}-{filter_name}"
+    
+    return index_name
+
+def get_sparse_searcher(index_type, k1, b, filter_name=None):
+    index_name = get_sparse_index_name(index_type, filter_name)
+    index_path = os.path.join(INDEX_DIR, index_name)
+    print(f"Using index: {index_name}")
+    print(f"Index path: {index_path}")
+
+    searcher = LuceneSearcher(index_path)
+    searcher.set_bm25(k1=k1, b=b)
+
+    return searcher
+
+def get_dense_searcher(index_type, d_encoder, q_encoder, filter_name=None):
+    index_name = get_dense_index_name(index_type, d_encoder, filter_name)
+    index_path = os.path.join(INDEX_DIR, index_name)
+    print(f"Using index: {index_name}")
+    print(f"Index path: {index_path}")
+
+    # create seracher
+    searcher = None
+    if os.path.isdir(q_encoder):
+        print(f"load the fine-tuned SentenceTransformer model from {q_encoder}")
+        query_encoder = CustomSentenceTransformerEncoder(q_encoder)
+        searcher = FaissSearcher(index_path, query_encoder)
+    else:
+        print(f"load the pre-trained query encoder from huggingface model hub: {q_encoder}")
+        searcher = FaissSearcher(index_path, q_encoder)
+    
+    return searcher
+
+def output_hits_trec(hits, target_id, output_file, index_name):
+    # {query_id} Q0 {doc_id} {rank} {score} {index_name}
     # Ensure the directory exists
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     with open(output_file, 'w') as f:
         for i in range(len(hits)):
-            f.write(f"{target_id} Q0 {hits[i].docid} {i+1} {hits[i].score} {retrieval_system_tag}\n")
+            f.write(f"{target_id} Q0 {hits[i].docid} {i+1} {hits[i].score} {index_name}\n")
 
 def output_hits(hits, output_file):
     # Ensure the directory exists
@@ -108,21 +143,33 @@ def output_hits(hits, output_file):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--d_encoder", type=str, required=False, help="Document encoder model name") # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
-    parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
-    parser.add_argument("--index_type", type=str, required=True, choices=["basic", "title", "company_name", "ner_concat", "ner_concat_with_company_name", "ner_concat_with_title"])
-    parser.add_argument("--filter_name", type=str, default=None, help="Filter name for the index")
-    parser.add_argument("--k", type=int, default=10)
-    parser.add_argument("--prepend_info", type=str, choices=["instruction", "target_title", "target_company", "null"], help="Information to prepend to the target paragraph")
+    parser.add_argument("--prepend_info", choices=["instruction", "target_title", "target_company", "null"], default="null", help='Specify the type of information to prepend to the target paragraph')
     parser.add_argument("--cik", type=str, required=True)
     parser.add_argument("--target_year", type=str, required=True)
     parser.add_argument("--target_item", type=str, required=True)
+    parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--target_paragraph", type=str, default=None)
+    parser.add_argument("--filter_name", type=str, default=None, help="Filter name for the index")
     parser.add_argument("--post_filter", action='store_true', default=False, help="Indicates whether to conduct post filtering")
+    # for sparse retriever
+    parser.add_argument("--sparse_index_type", type=str, required=True, choices=["multi_fields", "basic", "ner", "company_name", "title"])
+    parser.add_argument("--k1", type=float, default=0.9, help="BM25 k1 parameter")
+    parser.add_argument("--b", type=float, default=0.4, help="BM25 b parameter")
+    # for dense retriever
+    parser.add_argument("--dense_index_type", type=str, required=True, choices=["basic", "meta_data", "title", "ner_concat", "company_name"])
+    parser.add_argument("--d_encoder", type=str, required=False, help="Document encoder model name") # facebook/dpr-ctx_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
+    parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder model name") # facebook/dpr-question_encoder-multiset-base; sentence-transformers/all-mpnet-base-v2
+    # for hybrid
+    parser.add_argument("--alpha", type=float, default=0.1, help="Weight for the hybrid retriever")
+    parser.add_argument("--weight_on_dense", action='store_true', default=False, help="Indicates whether to use the weight on dense retriever for the hybrid retriever")
 
     args = parser.parse_args()
 
-    retriever = get_retriever(args.index_type, args.d_encoder, args.q_encoder, args.k, args.filter_name)
+    s_searcher = get_sparse_searcher(args.sparse_index_type, args.k1, args.b, args.filter_name)
+    d_searcher = get_dense_searcher(args.dense_index_type, args.d_encoder, args.q_encoder, args.filter_name)
+    h_searcher = HybridSearcher(s_searcher, d_searcher)
+
+    retriever = HybridDocumentRetriever(h_searcher, k=args.k, alpha=args.alpha, weight_on_dense=args.weight_on_dense)
 
     target_file_name = get_10K_file_name(args.cik, args.target_year)
 
@@ -162,10 +209,15 @@ def main():
                 else:
                     hits = retriever.search_documents(full_query)
 
-                index_name = get_index_name(args.index_type, args.d_encoder, args.filter_name)
-                retrieval_system_tag = f"{index_name}-{args.prepend_info}"
+                s_index_name = get_sparse_index_name(args.sparse_index_type, args.filter_name)
+                d_index_name = get_dense_index_name(args.dense_index_type, args.d_encoder, args.filter_name)
 
-                output_file_trec = os.path.join('retrieval_results_trec', f"{args.cik}_{args.target_year}", retrieval_system_tag, data["id"] + '.txt')
+                if args.weight_on_dense:
+                    retrieval_system_tag = f"hybrid-{args.sparse_index_type}-{d_index_name}-{args.prepend_info}-alpha_{args.alpha}-weight_on_dense"
+                else:
+                    retrieval_system_tag = f"hybrid-{args.sparse_index_type}-{d_index_name}-{args.prepend_info}-alpha_{args.alpha}"
+
+                output_file_trec = os.path.join("retrieval_results_trec", f"{args.cik}_{args.target_year}", retrieval_system_tag, data["id"] + '.txt')
                 output_hits_trec(hits, data["id"], output_file_trec, retrieval_system_tag)
 
                 output_file = os.path.join('retrieval_results', f"{args.cik}_{args.target_year}", retrieval_system_tag, data["id"] + '.jsonl')

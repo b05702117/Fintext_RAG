@@ -18,8 +18,10 @@ cik_paragraphs["1090727"]="para5"
 
 # Define ranges for k1 and b parameters
 # k1_values=0.9
-k1_values=(0.0 0.5 0.9 1.0 1.5 2.0 2.5 3.0)
-b_values=(0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0)
+# k1_values=(0.0 0.5 0.9 1.0 1.5 2.0 2.5 3.0)
+k1_values=(1.2)
+b_values=(0.9)
+# b_values=(0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0)
 # prepend_infos=("target_title" "target_company" "null")
 
 # Loop over the parameter values
