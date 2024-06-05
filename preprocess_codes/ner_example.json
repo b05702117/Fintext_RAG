@@ -1,0 +1,55 @@
+[
+  {
+    "text": "Recent developments, future objectives and challenges Termination of the arm share purchase agreement on february 8, 2022, nvidia and softbank announced the termination of the share purchase agreement whereby nvidia would have acquired arm from softbank. the parties agreed to terminate because of significant regulatory challenges preventing the completion of the transaction. we intend to record in operating expenses a $1.36 billion charge in the first quarter of fiscal year 2023 reflecting the write-off of the prepayment provided at signing in september 2020.", 
+    "spans": [
+      {
+        "text": "arm", 
+        "is_entity": true, 
+        "label": "ORGANISATION", 
+        "reason": "The text refers to the company ARM"
+      }, 
+      {
+        "text": "nvidia", 
+        "is_entity": true, 
+        "label": "ORGANISATION", 
+        "reason": "The text refers to the company Nvidia"
+      }, 
+      {
+        "text": "softbank", 
+        "is_entity": true, 
+        "label": "ORGANISATION", 
+        "reason": "The text refers to the company Softbank"
+      }, 
+      {
+        "text": "the first quarter of fiscal year 2023",
+        "is_entity": true,
+        "label": "TIME_PERIOD", 
+        "reason": "The text refers to a specific time period"
+      }, 
+      {
+        "text": "february 8, 2022",
+        "is_entity": true,
+        "label": "DATE", 
+        "reason": "The text refers to a specific date"
+      }, 
+      {
+        "text": "September 2020",
+        "is_entity": true,
+        "label": "TIME_PERIOD", 
+        "reason": "The text refers to a specific time period"
+      }, 
+      {
+        "text": "$1.36 billion",
+        "is_entity": true,
+        "label": "MONEY", 
+        "reason": "The text refers to a specific amount of money"
+      }, 
+      {
+        "text": "significant regulatory challenges",
+        "is_entity": false,
+        "label": "==NONE==", 
+        "reason": "The text refers to a general concept not specific law or regulation"
+      }
+    ]
+  }
+]

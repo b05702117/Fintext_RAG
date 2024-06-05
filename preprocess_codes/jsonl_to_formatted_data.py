@@ -91,6 +91,11 @@ def convert_docid_to_title(docid):
 
     return new_title
 
+def get_item_from_docid(docid):
+    # 20181105_10-K_320193_part2_item7_para6
+    item = docid.split('_')[-2]
+    return ITEM_MAPPING.get(item, "Unknown Item")
+
 def convert_data(first_line, data, format_type, nlp=None, max_length=None):
     # Regular expression pattern to match ids ending with "_fin_stats_para" followed by numbers
     # pattern = r'_finstats_para\d+$'
@@ -103,6 +108,7 @@ def convert_data(first_line, data, format_type, nlp=None, max_length=None):
     filing_date = first_line["filing_date"] # "yyyymmdd"
     form = first_line["form"]
     sector = first_line["sector"]
+    item = get_item_from_docid(data["id"])
 
     if data["id"].endswith("statements") or data["id"].endswith("sheets"):
         return None
@@ -127,6 +133,7 @@ def convert_data(first_line, data, format_type, nlp=None, max_length=None):
             "filing_year": filing_date[:4],
             "filing_month": filing_date[4:6],
             "form": form,
+            "item": item
         })
 
     elif format_type == "meta_data":
