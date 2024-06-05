@@ -33,7 +33,7 @@ parser.add_argument("--q_encoder", type=str, required=False, help="Query encoder
 # for hybrid retriever
 parser.add_argument("--sparse_index_type", type=str, choices=["multi_fields", "basic", "ner", "company_name", "title"], default="multi_fields", help="Index type for the sparse retriever")
 parser.add_argument("--sparse_filter_name", type=str, default=None, help="Filter name for the sparse index in the hybrid retriever")
-parser.add_argument("--weight_on_dense", type=bool, default=False, help="Indicates whether to use the weight on dense retriever for the hybrid retriever")
+parser.add_argument("--weight_on_dense", action='store_true', default=False, help="Indicates whether to use the weight on dense retriever for the hybrid retriever")
 parser.add_argument("--alpha", type=float, default=0.1, help="Weight for the hybrid retriever")
 
 args = parser.parse_args()
