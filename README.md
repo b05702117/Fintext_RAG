@@ -1,4 +1,4 @@
-# Retriever-Reader pipeline
+# Retriever pipeline in CFDA lab
 The original codes are maintained under this directory: `/home/ybtu/FinNLP/`
 
 Maintain the directory structure as defined in `config.py`. It should properly linked to the collections and indexes on my home directory. 
