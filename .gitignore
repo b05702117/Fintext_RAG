@@ -1,16 +1,24 @@
 __pycache__/*
 
+# corpus, embeddings, indexes
 collections/10K/*
 collections/10Q/*
-Jsonl_Data/*.jsonl
 indexes/*
-retrieval_results/*
-retrieval_results_trec/*
-Archive/*
-downloads/*
-highlighting_results/*
 embeddings/*
+
+# retrieval results
+retrieval_results/*
+retrieval_results_trec/*_*/*
+highlighting_results/*
+
+Archive/*
 training/model/*
+
+eval/*
+llm_ner/*
+training/*.jsonl
+
+cnc_highlighting/*
 
 BM25_tuning/retrieval_results/*
 BM25_tuning/retrieval_results_trec/*
@@ -20,11 +28,6 @@ dense_tuning/retrieval_results/*
 dense_tuning/retrieval_results_trec/*
 dense_tuning/*.csv
 
-eval/*
-llm_ner/*
-training/*.jsonl
-
-cnc_highlighting/*
-DPR/*
-
-retriever_reader_testing.ipynb
+hybrid_tuning/retrieval_results/*
+hybrid_tuning/retrieval_results_trec/*
+hybrid_tuning/*.csv
