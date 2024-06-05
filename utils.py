@@ -5,7 +5,7 @@ import subprocess
 import fnmatch
 import re
 import csv
-from config import ROOT, RAW_DIR, FORMMATED_DIR, INDEX_DIR
+from config import ROOT, FORMMATED_DIR, INDEX_DIR
 from config import CIK_TO_COMPANY, ITEM_MAPPING, CIK_TO_SECTOR
 
 def aggregate_and_index_all_prior(cik, form, start_year, end_year):
@@ -134,24 +134,6 @@ def get_file_name(cik, form, year, month):
     print("File not found.")
     return None
 
-# def retrieve_paragraph_from_raw_jsonl(file_name, part_key, item_key, paragraph_number):
-#     '''only for 10-Q files'''
-#     search_pattern = f"*_{part_key}_{item_key}_para{paragraph_number}"
-
-#     with open(os.path.join(RAW_DIR, file_name), "r") as open_file:
-#         next(open_file) # skip the first line
-
-#         for line in open_file:
-#             data = json.loads(line)
-
-#             if not re.search(r'para\d+$', data.get("id", "")):
-#                 continue
-            
-#             if fnmatch.fnmatch(data["id"], search_pattern):
-#                 return data["paragraph"]
-            
-#     print("Paragraph not found.")
-#     return None
 
 def retrieve_paragraph_from_fromatted_jsonl(file_name, part_key, item_key, paragraph_number):
     search_pattern = f"*_{part_key}_{item_key}_para{paragraph_number}"

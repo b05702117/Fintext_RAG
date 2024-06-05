@@ -4,7 +4,7 @@ import os
 import json
 
 ROOT = "/home/ybtu/FinNLP"
-RAW_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
+# RAW_DIR = "/home/ybtu/FinNLP/Jsonl_Data"
 
 # for 10-K
 FORMMATED_DIR = "/home/ybtu/FinNLP/collections/10K/basic"
