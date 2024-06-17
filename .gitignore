@@ -9,6 +9,7 @@ embeddings/*
 # retrieval results
 retrieval_results/*
 retrieval_results_trec/*_*/*
+!retrieval_results_trec/combined_results/*
 highlighting_results/*
 
 Archive/*
